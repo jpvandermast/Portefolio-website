@@ -1,169 +1,177 @@
 import React from 'react';
-import { ExternalLink, Code2, Sparkles, Layers, Clock, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Code2, Clock, CheckCircle2, Bot, MessageSquare, ShieldCheck, Plus } from 'lucide-react';
 import { initialProjects } from '../data/portfolioData';
 
 export const ProjectsSection: React.FC = () => {
+  const getProjectIcon = (id: string) => {
+    switch (id) {
+      case 'poc-1':
+        return <Bot className="w-6 h-6 stroke-[2]" />;
+      case 'poc-2':
+        return <MessageSquare className="w-6 h-6 stroke-[2]" />;
+      case 'poc-3':
+        return <ShieldCheck className="w-6 h-6 stroke-[2]" />;
+      default:
+        return <Code2 className="w-6 h-6 stroke-[2]" />;
+    }
+  };
+
   return (
-    <section id="projecten" className="py-20 bg-[#FAF8F5] border-b border-[#EAE3D6]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="projecten" className="py-24 px-6 bg-white border-b border-[#e4e7ea]">
+      <div className="max-w-[1120px] mx-auto">
         
-        {/* Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFE6] text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-3">
-            <span>Proof-of-Concepts & AI Solutions</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A2E4A] tracking-tight">
+        {/* Section Header with Eyebrow */}
+        <div className="max-w-2xl mb-12">
+          <span className="text-[#121D2F] font-bold text-[13px] tracking-[0.06em] uppercase block mb-3.5">
+            Proof-of-Concepts & AI Solutions
+          </span>
+          <h2 className="text-3xl sm:text-[34px] font-bold text-[#121D2F] leading-tight mb-2">
             Gebouwde AI-Oplossingen & Prototypes
           </h2>
-          <p className="mt-3 text-lg text-[#556980]">
+          <p className="text-[16px] text-[#4a5b6b] leading-relaxed">
             Tijdens de minor ontwikkel ik concrete, werkende AI-oplossingen (User Stories). 
-            Hieronder vind je de prototypes, technische stacks en koppelingen met de leeruitkomsten.
+            Hieronder vind je de prototypes, technische architecturen en koppelingen met de leeruitkomsten.
           </p>
         </div>
 
-        {/* Project Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Project Cards Grid (Diensten-card style, text-only with round navy icon badges, NO images!) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {initialProjects.map((project) => {
-            const isLive = project.status === 'Gereed';
             const isDev = project.status === 'In ontwikkeling';
 
             return (
               <div
                 key={project.id}
-                className="bg-white rounded-2xl border border-[#E8E1D5] overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+                className="bg-white p-8 rounded-[6px] border border-[#e4e7ea] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all flex flex-col justify-between"
               >
                 <div>
-                  {/* Image banner */}
-                  <div className="relative aspect-[16/10] bg-[#E8E1D5] overflow-hidden">
-                    {project.previewImage ? (
-                      <img
-                        src={project.previewImage}
-                        alt={project.title}
-                        className="w-full h-full object-cover group-hover:scale-103 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-[#1A2E4A] text-white">
-                        <Sparkles className="w-8 h-8 text-[#C58B2E]" />
-                      </div>
-                    )}
-
-                    {/* Status badge on image */}
-                    <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#FAF8F5]/90 backdrop-blur-xs text-[#1A2E4A] shadow-xs">
-                      {isDev ? (
-                        <>
-                          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                          <span>In ontwikkeling</span>
-                        </>
-                      ) : (
-                        <>
-                          <Clock className="w-3 h-3 text-[#64748B]" />
-                          <span>Concept</span>
-                        </>
-                      )}
+                  {/* Top row: Round navy badge & sprint tag */}
+                  <div className="flex items-center justify-between mb-5">
+                    <div className="w-12 h-12 rounded-full bg-[#121D2F] text-white flex items-center justify-center shrink-0">
+                      {getProjectIcon(project.id)}
                     </div>
 
-                    <div className="absolute top-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-[#1A2E4A] text-white">
-                      Sprint {project.sprint}
+                    <div className="flex items-center gap-2">
+                      <span className="text-[11px] font-bold uppercase tracking-[0.06em] bg-[#f6f7f8] text-[#121D2F] px-2.5 py-1 rounded-[4px] border border-[#e4e7ea]">
+                        Sprint {project.sprint}
+                      </span>
                     </div>
                   </div>
 
-                  {/* Body Content */}
-                  <div className="p-6 space-y-4">
-                    
-                    {/* LU Mapping Badges */}
-                    <div className="flex flex-wrap items-center gap-1.5">
+                  {/* Status indicator */}
+                  <div className="mb-3">
+                    <span
+                      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-[4px] text-[11px] font-bold ${
+                        isDev
+                          ? 'bg-[#eaf0fa] text-[#2b4d87]'
+                          : 'bg-[#f6f7f8] text-[#5e6d7d]'
+                      }`}
+                    >
+                      <span className={`w-1.5 h-1.5 rounded-full ${isDev ? 'bg-[#3762AB] animate-pulse' : 'bg-[#5e6d7d]'}`}></span>
+                      <span>{project.status}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="text-[20px] font-bold text-[#121D2F] mb-1 leading-snug">
+                    {project.title}
+                  </h3>
+
+                  <div className="text-xs text-[#3762AB] font-semibold mb-3">
+                    {project.subtitle}
+                  </div>
+
+                  <p className="text-[14px] text-[#4a5b6b] leading-relaxed mb-6">
+                    {project.description}
+                  </p>
+
+                  {/* Related LUs badges (navy/blue palette) */}
+                  <div className="mb-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-2">
+                      Gekoppelde Leeruitkomsten:
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
                       {project.relatedLUs.map((lu) => (
                         <span
                           key={lu}
-                          className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-[#F4EFE6] text-[#1A2E4A] border border-[#E0D7C6]"
+                          className="px-2 py-0.5 rounded-[4px] text-[11px] font-bold bg-[#121D2F] text-white"
                         >
                           {lu}
                         </span>
                       ))}
                     </div>
+                  </div>
 
-                    <div>
-                      <span className="text-xs font-semibold text-[#C58B2E] block mb-1">
-                        {project.subtitle}
-                      </span>
-                      <h3 className="text-lg font-bold text-[#1A2E4A] leading-snug">
-                        {project.title}
-                      </h3>
+                  {/* Tools list */}
+                  <div className="mb-6">
+                    <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-2">
+                      Technologie & Frameworks:
                     </div>
-
-                    <p className="text-xs text-[#556980] leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {/* Tech stack pills */}
-                    <div className="pt-2">
-                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#8A9BA8] mb-1.5">
-                        Tools & Technologie
-                      </div>
-                      <div className="flex flex-wrap gap-1.5">
-                        {project.tools.map((tool) => (
-                          <span
-                            key={tool}
-                            className="px-2 py-1 rounded-md text-[11px] font-medium bg-[#FAF8F5] text-[#33475B] border border-[#E8E1D5]"
-                          >
-                            {tool}
-                          </span>
-                        ))}
-                      </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.tools.map((tool) => (
+                        <span
+                          key={tool}
+                          className="px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-[#f6f7f8] text-[#22303f] border border-[#e4e7ea]"
+                        >
+                          {tool}
+                        </span>
+                      ))}
                     </div>
-
                   </div>
                 </div>
 
-                {/* Footer Action Buttons */}
-                <div className="p-6 pt-0 border-t border-[#F4EFE6] mt-4 flex items-center justify-between gap-3">
-                  {project.liveUrl && project.liveUrl !== '' ? (
+                {/* Bottom Card Actions (Small rectangular buttons) */}
+                <div className="pt-4 border-t border-[#e4e7ea] flex items-center justify-between gap-3 text-xs">
+                  {project.liveUrl && project.liveUrl !== '#' ? (
                     <a
                       href={project.liveUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A2E4A] hover:text-[#2C476F]"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-bold text-[#3762AB] hover:text-[#2b4d87]"
                     >
-                      <ExternalLink className="w-3.5 h-3.5 text-[#C58B2E]" />
-                      <span>Live POC</span>
+                      <span>Live demo</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
                     </a>
                   ) : (
-                    <span className="text-xs text-[#8C9AA8] font-medium">
-                      Live link volgt in sprint {project.sprint}
-                    </span>
+                    <span className="text-[#6c7d8f] font-medium">Demo volgt</span>
                   )}
 
-                  {project.codeUrl && project.codeUrl !== '' ? (
+                  {project.codeUrl && project.codeUrl !== '#' ? (
                     <a
                       href={project.codeUrl}
-                      className="inline-flex items-center gap-1 text-xs font-semibold text-[#556980] hover:text-[#1A2E4A]"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 font-bold text-[#121D2F] hover:text-[#3762AB]"
                     >
                       <Code2 className="w-3.5 h-3.5" />
-                      <span>Code</span>
+                      <span>Broncode</span>
                     </a>
-                  ) : null}
+                  ) : (
+                    <span className="text-[#6c7d8f] font-medium">Code repo gepland</span>
+                  )}
                 </div>
-
               </div>
             );
           })}
+        </div>
 
-          {/* Dedicated Placeholder Card for Future Minor Projects */}
-          <div className="bg-[#FAF8F5] rounded-2xl border-2 border-dashed border-[#DCD1BF] p-8 flex flex-col items-center justify-center text-center space-y-3 min-h-[380px]">
-            <div className="w-12 h-12 rounded-2xl bg-[#F0E8DC] flex items-center justify-center text-[#8C7E6D]">
-              <Layers className="w-6 h-6" />
+        {/* Future POC Placeholder Card */}
+        <div className="p-6 rounded-[6px] border border-dashed border-[#cbd2d9] bg-[#f6f7f8] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center font-bold text-sm shrink-0">
+              +
             </div>
-            <h3 className="text-base font-bold text-[#1A2E4A]">
-              Toekomstige AI Proof-of-Concept
-            </h3>
-            <p className="text-xs text-[#6C7E92] max-w-xs leading-relaxed">
-              In latere sprints (Sprint 5 t/m 10) worden hier additionele prototypes 
-              zoals RAG-systemen, AI-gesprekstrainers en geavanceerde automations toegevoegd.
-            </p>
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#C58B2E] bg-white px-3 py-1.5 rounded-full border border-[#E0D7C6]">
-              <Clock className="w-3 h-3" />
-              <span>Gereserveerde Ruimte</span>
-            </span>
+            <div>
+              <div className="text-[15px] font-bold text-[#121D2F]">
+                Volgende Proof-of-Concepts (Sprints 7 t/m 10)
+              </div>
+              <p className="text-[13px] text-[#4a5b6b]">
+                In latere sprints worden geavanceerde RAG-pipelines en agentic workflows gebouwd en gedocumenteerd.
+              </p>
+            </div>
           </div>
-
+          <span className="text-xs font-bold text-[#3762AB] uppercase tracking-[0.06em] whitespace-nowrap">
+            Gepland in Agile Backlog
+          </span>
         </div>
 
       </div>

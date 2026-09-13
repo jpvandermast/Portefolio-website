@@ -2,66 +2,46 @@ import React, { useState } from 'react';
 import { 
   FileText, 
   ExternalLink, 
-  Plus, 
   CheckCircle2, 
   Clock, 
   Video, 
   Globe, 
   Github, 
-  SlidersHorizontal,
-  ChevronDown,
-  ChevronUp,
+  ChevronDown, 
+  ChevronUp, 
+  BookOpen,
   Layers,
-  Copy,
-  Check
+  Sparkles
 } from 'lucide-react';
 import { EvidenceFormat, EvidenceItem, LearningOutcome, LearningOutcomeId } from '../types';
 import { learningOutcomes as defaultLUs } from '../data/portfolioData';
-import { AddEvidenceModal } from './AddEvidenceModal';
 
 interface LearningOutcomesSectionProps {
   evidenceList: EvidenceItem[];
-  onAddEvidence: (item: EvidenceItem) => void;
 }
 
 export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = ({
   evidenceList,
-  onAddEvidence,
 }) => {
   const [selectedLuFilter, setSelectedLuFilter] = useState<string>('ALL');
   const [expandedLu, setExpandedLu] = useState<string | null>(null);
-  const [modalOpen, setModalOpen] = useState(false);
-  const [targetLuId, setTargetLuId] = useState<LearningOutcomeId>('LU1');
-  const [copiedNotification, setCopiedNotification] = useState(false);
 
-  // Format icon helper
   const getFormatIcon = (format: EvidenceFormat) => {
     switch (format) {
       case 'Video':
-        return <Video className="w-4 h-4 text-[#C58B2E]" />;
+        return <Video className="w-4 h-4 text-[#3762AB]" />;
       case 'Prototype':
-        return <Globe className="w-4 h-4 text-[#4A7FB5]" />;
+        return <Globe className="w-4 h-4 text-[#3762AB]" />;
       case 'GitHub':
-        return <Github className="w-4 h-4 text-[#1A2E4A]" />;
+        return <Github className="w-4 h-4 text-[#121D2F]" />;
       case 'Document':
       default:
-        return <FileText className="w-4 h-4 text-[#52796F]" />;
+        return <FileText className="w-4 h-4 text-[#121D2F]" />;
     }
-  };
-
-  const handleOpenAddModal = (luId: LearningOutcomeId) => {
-    setTargetLuId(luId);
-    setModalOpen(true);
   };
 
   const toggleExpand = (id: string) => {
     setExpandedLu(expandedLu === id ? null : id);
-  };
-
-  const copyJsonToClipboard = () => {
-    navigator.clipboard.writeText(JSON.stringify(evidenceList, null, 2));
-    setCopiedNotification(true);
-    setTimeout(() => setCopiedNotification(false), 2500);
   };
 
   const filteredOutcomes = selectedLuFilter === 'ALL'
@@ -69,293 +49,205 @@ export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = (
     : defaultLUs.filter((lu) => lu.id === selectedLuFilter);
 
   return (
-    <section id="leeruitkomsten" className="py-20 bg-[#FAF8F5] border-b border-[#EAE3D6]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="leeruitkomsten" className="py-24 px-6 bg-white border-b border-[#e4e7ea]">
+      <div className="max-w-[1120px] mx-auto">
         
-        {/* Section Header */}
+        {/* Section Header with Eyebrow */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFE6] text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-3">
-              <span>Minor Toetsing & Voortgang</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A2E4A] tracking-tight">
+          <div className="max-w-2xl">
+            <span className="text-[#121D2F] font-bold text-[13px] tracking-[0.06em] uppercase block mb-3.5">
+              Toetsing & Voortgang
+            </span>
+            <h2 className="text-3xl sm:text-[34px] font-bold text-[#121D2F] leading-tight mb-2">
               Leeruitkomsten (LU1 t/m LU5)
             </h2>
-            <p className="mt-3 text-lg text-[#556980]">
-              Voor elke leeruitkomst vind je hier de officiële doelstelling en alle gekoppelde bewijsstukken 
-              uit Research, User en Learning Stories.
+            <p className="text-[16px] text-[#4a5b6b] leading-relaxed">
+              Voor elke leeruitkomst vind je hier de officiële doelstelling, beoordelingscriteria en 
+              alle gekoppelde bewijsstukken uit Research, User en Learning Stories.
             </p>
           </div>
 
-          {/* Quick Action Buttons */}
-          <div className="flex flex-wrap items-center gap-3">
-            <button
-              onClick={() => handleOpenAddModal('LU1')}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1A2E4A] hover:bg-[#2C476F] text-white text-xs font-bold shadow-xs transition-all"
-            >
-              <Plus className="w-4 h-4 text-[#C58B2E]" />
-              Bewijsstuk Toevoegen
-            </button>
-            <button
-              onClick={copyJsonToClipboard}
-              title="Exporteer alle bewijsstukken als JSON voor je broncode"
-              className="inline-flex items-center gap-1.5 px-3 py-2.5 rounded-xl bg-[#F4EFE6] hover:bg-[#EBE2D3] border border-[#DDD3C2] text-xs font-semibold text-[#1A2E4A] transition-colors"
-            >
-              {copiedNotification ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Gekopieerd!</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4 text-[#556980]" />
-                  <span>Kopieer JSON</span>
-                </>
-              )}
-            </button>
+          {/* Quick Info Pill */}
+          <div className="text-[13px] font-semibold text-[#4a5b6b] bg-[#f6f7f8] px-4 py-2.5 rounded-[4px] border border-[#e4e7ea] whitespace-nowrap">
+            Totaal <strong className="text-[#121D2F]">{evidenceList.length}</strong> gedefinieerde bewijsstukken
           </div>
         </div>
 
-        {/* Filter Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+        {/* Filter Bar */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 text-[14px]">
+          <span className="text-xs font-bold text-[#121D2F] uppercase tracking-[0.06em] mr-2 shrink-0">
+            Filter op:
+          </span>
           <button
             onClick={() => setSelectedLuFilter('ALL')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
+            className={`px-4 py-2 rounded-[4px] font-bold text-xs transition-colors shrink-0 ${
               selectedLuFilter === 'ALL'
-                ? 'bg-[#1A2E4A] text-white shadow-xs'
-                : 'bg-[#F4EFE6] text-[#4A5D73] hover:bg-[#EAE3D6]'
+                ? 'bg-[#121D2F] text-white'
+                : 'bg-[#f6f7f8] text-[#22303f] hover:bg-[#e4e7ea]'
             }`}
           >
-            Alle Leeruitkomsten ({evidenceList.length} items)
+            Alle Leeruitkomsten (5)
           </button>
-          {defaultLUs.map((lu) => {
-            const count = evidenceList.filter((e) => e.luId === lu.id).length;
-            const isSelected = selectedLuFilter === lu.id;
-            return (
-              <button
-                key={lu.id}
-                onClick={() => setSelectedLuFilter(lu.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap flex items-center gap-2 ${
-                  isSelected
-                    ? 'bg-[#1A2E4A] text-white shadow-xs'
-                    : 'bg-[#F4EFE6] text-[#4A5D73] hover:bg-[#EAE3D6]'
-                }`}
-              >
-                <span>{lu.code}</span>
-                <span className={`px-1.5 py-0.5 rounded-full text-[10px] ${
-                  isSelected ? 'bg-white/20 text-white' : 'bg-[#E8DFCFC0] text-[#1A2E4A]'
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+          {defaultLUs.map((lu) => (
+            <button
+              key={lu.id}
+              onClick={() => setSelectedLuFilter(lu.id)}
+              className={`px-4 py-2 rounded-[4px] font-bold text-xs transition-colors shrink-0 ${
+                selectedLuFilter === lu.id
+                  ? 'bg-[#3762AB] text-white'
+                  : 'bg-[#f6f7f8] text-[#22303f] hover:bg-[#e4e7ea]'
+              }`}
+            >
+              {lu.code}
+            </button>
+          ))}
         </div>
 
-        {/* Learning Outcome Cards Container */}
+        {/* Learning Outcome Cards Stack */}
         <div className="space-y-8">
           {filteredOutcomes.map((lu) => {
-            const items = evidenceList.filter((e) => e.luId === lu.id);
             const isExpanded = expandedLu === lu.id;
+            const matchingEvidence = evidenceList.filter((ev) => ev.luId === lu.id);
 
             return (
               <div
                 key={lu.id}
-                id={lu.id.toLowerCase()}
-                className="bg-[#FFFFFF] rounded-2xl border border-[#E8E1D5] shadow-xs overflow-hidden transition-all hover:border-[#D0C4B0]"
+                className="bg-white rounded-[6px] border border-[#e4e7ea] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all overflow-hidden"
               >
-                
-                {/* Header Strip of the LU Card */}
-                <div className="p-6 lg:p-8 border-b border-[#F0EAE0]">
-                  <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                {/* Card Header */}
+                <div className="p-6 sm:p-8">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
                     
-                    <div className="space-y-2 max-w-4xl">
-                      <div className="flex items-center gap-3">
-                        <span className="px-3 py-1 rounded-lg text-xs font-extrabold tracking-wider bg-[#1A2E4A] text-white">
-                          {lu.code}
-                        </span>
-                        <span className="text-xs font-semibold text-[#6C7E92]">
-                          HU Minor Future-proof met AI!
-                        </span>
-                        <span className="text-xs px-2 py-0.5 rounded bg-[#FAF8F5] border border-[#E0D7C6] text-[#556980] font-medium">
-                          {items.length} {items.length === 1 ? 'bewijsstuk' : 'bewijsstukken'}
-                        </span>
+                    <div className="flex items-start gap-4">
+                      {/* Round badge icon with navy background */}
+                      <div className="w-12 h-12 rounded-full bg-[#121D2F] text-white flex items-center justify-center shrink-0">
+                        <BookOpen className="w-6 h-6 stroke-[2]" />
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl font-bold text-[#1A2E4A]">
-                        {lu.title}
-                      </h3>
-
-                      <p className="text-sm text-[#475A70] leading-relaxed">
-                        {lu.shortDescription}
-                      </p>
+                      <div>
+                        <div className="flex items-center gap-2.5 mb-1.5">
+                          <span className={`px-2.5 py-0.5 rounded-[4px] text-[11px] font-bold ${lu.colorBadge}`}>
+                            {lu.code}
+                          </span>
+                          <span className="text-xs text-[#4a5b6b] font-medium">
+                            {matchingEvidence.length} bewijsstuk{matchingEvidence.length === 1 ? '' : 'ken'}
+                          </span>
+                        </div>
+                        <h3 className="text-[20px] font-bold text-[#121D2F] leading-snug">
+                          {lu.title}
+                        </h3>
+                      </div>
                     </div>
 
-                    {/* Actions on this LU */}
-                    <div className="flex items-center gap-2.5 shrink-0 pt-2 lg:pt-0">
-                      <button
-                        onClick={() => toggleExpand(lu.id)}
-                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-[#1A2E4A] bg-[#F4EFE6] hover:bg-[#EBE2D3] transition-colors"
-                      >
-                        {isExpanded ? (
-                          <>
-                            <span>Minder details</span>
-                            <ChevronUp className="w-3.5 h-3.5" />
-                          </>
-                        ) : (
-                          <>
-                            <span>Beoordelingscriteria</span>
-                            <ChevronDown className="w-3.5 h-3.5" />
-                          </>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => handleOpenAddModal(lu.id)}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-[#1A2E4A] hover:bg-[#2C476F] transition-colors"
-                      >
-                        <Plus className="w-3.5 h-3.5 text-[#E8A948]" />
-                        <span>Koppel bewijs</span>
-                      </button>
-                    </div>
-
+                    {/* Criteria toggle button */}
+                    <button
+                      onClick={() => toggleExpand(lu.id)}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-[4px] bg-[#f6f7f8] hover:bg-[#e4e7ea] text-xs font-bold text-[#121D2F] transition-colors self-start shrink-0"
+                    >
+                      <span>Criteria</span>
+                      {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                    </button>
                   </div>
 
-                  {/* Collapsible Criteria & Details */}
+                  <p className="text-[15px] text-[#4a5b6b] leading-relaxed mt-2">
+                    {lu.detailedDescription}
+                  </p>
+
+                  {/* Expandable Assessment Criteria */}
                   {isExpanded && (
-                    <div className="mt-6 pt-6 border-t border-[#F0EAE0] grid grid-cols-1 md:grid-cols-12 gap-6 bg-[#FAF8F5] p-5 rounded-xl animate-in fade-in duration-200">
-                      <div className="md:col-span-6 space-y-2">
-                        <div className="text-xs font-bold uppercase tracking-wider text-[#1A2E4A]">
-                          Toelichting & Context
-                        </div>
-                        <p className="text-xs text-[#52667A] leading-relaxed">
-                          {lu.detailedDescription}
-                        </p>
+                    <div className="mt-6 p-5 rounded-[4px] bg-[#f6f7f8] border border-[#e4e7ea]">
+                      <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-3">
+                        Officiële Beoordelingscriteria:
                       </div>
-                      <div className="md:col-span-6 space-y-2">
-                        <div className="text-xs font-bold uppercase tracking-wider text-[#1A2E4A]">
-                          Toetscriteria voor de Minor
-                        </div>
-                        <ul className="space-y-1.5 text-xs text-[#52667A]">
-                          {lu.assessmentCriteria.map((crit, idx) => (
-                            <li key={idx} className="flex items-start gap-2">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#52796F] shrink-0 mt-0.5" />
-                              <span>{crit}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                      <ul className="space-y-2">
+                        {lu.assessmentCriteria.map((crit, idx) => (
+                          <li key={idx} className="flex items-start gap-2.5 text-[14px] text-[#22303f]">
+                            <CheckCircle2 className="w-4 h-4 text-[#3762AB] shrink-0 mt-0.5" />
+                            <span>{crit}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   )}
                 </div>
 
-                {/* Evidence items container for this LU */}
-                <div className="p-6 lg:p-8 bg-[#FAF8F5]/60">
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#6C7E92] mb-4 flex items-center justify-between">
-                    <span>Gekoppelde bewijsstukken ({items.length})</span>
-                    <span className="text-[11px] font-normal text-[#8A9BA8]">
-                      Klik op een bewijsstuk om direct naar het document/prototype te gaan
-                    </span>
+                {/* Evidence Items for this LU */}
+                <div className="border-t border-[#e4e7ea] bg-[#f6f7f8] p-6 sm:p-8">
+                  <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-4">
+                    Gekoppelde Bewijsstukken ({lu.code}):
                   </div>
 
-                  {items.length === 0 ? (
-                    <div className="p-8 text-center border-2 border-dashed border-[#E0D7C6] rounded-xl bg-white/50">
-                      <Layers className="w-8 h-8 text-[#A89F91] mx-auto mb-2" />
-                      <div className="text-sm font-bold text-[#1A2E4A]">Nog geen bewijsstukken gekoppeld</div>
-                      <p className="text-xs text-[#6C7E92] mt-1 max-w-sm mx-auto">
-                        Voeg je eerste Research Story, User Story of Learning Story toe voor deze leeruitkomst.
-                      </p>
-                      <button
-                        onClick={() => handleOpenAddModal(lu.id)}
-                        className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-[#1A2E4A]"
-                      >
-                        <Plus className="w-3.5 h-3.5" /> Voeg toe
-                      </button>
+                  {matchingEvidence.length === 0 ? (
+                    <div className="text-[14px] text-[#6c7d8f] italic bg-white p-4 rounded-[4px] border border-[#e4e7ea]">
+                      Nog geen bewijsstukken gekoppeld aan {lu.code}.
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {items.map((item) => {
-                        const isPending = item.status === 'Binnenkort';
-                        const isExternal = Boolean(item.linkUrl && item.linkUrl !== '#');
+                      {matchingEvidence.map((ev) => {
+                        const isAvailable = ev.status !== 'Binnenkort' && ev.linkUrl && ev.linkUrl !== '' && ev.linkUrl !== '#';
 
                         return (
                           <div
-                            key={item.id}
-                            className={`p-5 rounded-xl border transition-all flex flex-col justify-between ${
-                              isPending
-                                ? 'bg-[#FCFBF9] border-[#E8E1D5] opacity-85'
-                                : 'bg-white border-[#E0D7C6] hover:border-[#1A2E4A] hover:shadow-xs'
-                            }`}
+                            key={ev.id}
+                            className="bg-white p-5 rounded-[4px] border border-[#e4e7ea] flex flex-col justify-between hover:border-[#cbd2d9] transition-colors"
                           >
-                            <div className="space-y-3">
-                              {/* Metadata chips */}
-                              <div className="flex flex-wrap items-center gap-2 justify-between">
-                                <div className="flex items-center gap-1.5">
-                                  <span className="p-1 rounded bg-[#F4EFE6]">
-                                    {getFormatIcon(item.format)}
+                            <div>
+                              <div className="flex items-center justify-between gap-2 mb-2.5">
+                                <div className="flex items-center gap-2">
+                                  {getFormatIcon(ev.format)}
+                                  <span className="text-xs font-bold text-[#121D2F]">
+                                    {ev.storyType}
                                   </span>
-                                  <span className="text-[11px] font-bold text-[#1A2E4A]">
-                                    {item.storyType}
-                                  </span>
-                                  {item.sprint && (
-                                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#E7EEF6] text-[#1A2E4A] font-semibold">
-                                      Sprint {item.sprint}
-                                    </span>
-                                  )}
                                 </div>
 
-                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                                  item.status === 'Afgerond'
-                                    ? 'bg-emerald-100 text-emerald-800'
-                                    : item.status === 'In uitvoering'
-                                    ? 'bg-amber-100 text-amber-900'
-                                    : 'bg-[#EDE7DB] text-[#6B5E4E]'
-                                }`}>
-                                  {item.status}
+                                <span
+                                  className={`px-2 py-0.5 rounded-[4px] text-[10px] font-bold ${
+                                    ev.status === 'Afgerond'
+                                      ? 'bg-[#eaf4eb] text-[#1e6e29]'
+                                      : ev.status === 'In uitvoering'
+                                      ? 'bg-[#eaf0fa] text-[#2b4d87]'
+                                      : 'bg-[#f0f2f5] text-[#5e6d7d]'
+                                  }`}
+                                >
+                                  {ev.status}
                                 </span>
                               </div>
 
-                              {/* Title & Description */}
-                              <div>
-                                <h4 className="text-base font-bold text-[#1A2E4A] group-hover:text-[#2C476F]">
-                                  {item.title}
-                                </h4>
-                                <p className="text-xs text-[#52667A] leading-relaxed mt-1.5">
-                                  {item.description}
-                                </p>
-                              </div>
+                              <h4 className="text-[16px] font-bold text-[#121D2F] mb-1.5 leading-snug">
+                                {ev.title}
+                              </h4>
+
+                              <p className="text-[13px] text-[#4a5b6b] leading-relaxed mb-4">
+                                {ev.description}
+                              </p>
                             </div>
 
-                            {/* Link / Action row */}
-                            <div className="pt-4 mt-3 border-t border-[#F2ECE0] flex items-center justify-between">
-                              <span className="text-[11px] text-[#8C9AA8]">
-                                {item.date || `Formaat: ${item.format}`}
+                            <div className="pt-3 border-t border-[#e4e7ea] flex items-center justify-between gap-2 text-xs">
+                              <span className="text-[#6c7d8f] font-medium">
+                                {ev.date || `Sprint ${ev.sprint}`}
                               </span>
 
-                              {isPending ? (
-                                <span className="inline-flex items-center gap-1 text-xs font-semibold text-[#8C9AA8] bg-[#F4EFE6] px-3 py-1.5 rounded-lg cursor-not-allowed">
-                                  <Clock className="w-3.5 h-3.5" />
-                                  <span>Binnenkort beschikbaar</span>
-                                </span>
-                              ) : (
+                              {isAvailable ? (
                                 <a
-                                  href={item.linkUrl || '#'}
-                                  target={isExternal ? '_blank' : '_self'}
-                                  rel={isExternal ? 'noopener noreferrer' : undefined}
-                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#1A2E4A] hover:text-[#2C476F] bg-[#F4EFE6] hover:bg-[#EBE2D3] px-3 py-1.5 rounded-lg transition-colors"
+                                  href={ev.linkUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 font-bold text-[#3762AB] hover:text-[#2b4d87]"
                                 >
-                                  <span>{item.linkLabel || 'Bekijk bewijsstuk'}</span>
-                                  <ExternalLink className="w-3.5 h-3.5 text-[#C58B2E]" />
+                                  <span>{ev.linkLabel || 'Openen'}</span>
+                                  <ExternalLink className="w-3.5 h-3.5" />
                                 </a>
+                              ) : (
+                                <span className="text-[#6c7d8f] italic">
+                                  {ev.linkLabel || 'Volgt binnenkort'}
+                                </span>
                               )}
                             </div>
-
                           </div>
                         );
                       })}
                     </div>
                   )}
-
                 </div>
 
               </div>
@@ -364,14 +256,6 @@ export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = (
         </div>
 
       </div>
-
-      {/* Add Modal */}
-      <AddEvidenceModal
-        isOpen={modalOpen}
-        onClose={() => setModalOpen(false)}
-        onAdd={onAddEvidence}
-        defaultLuId={targetLuId}
-      />
     </section>
   );
 };

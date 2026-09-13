@@ -1,6 +1,6 @@
 export type LearningOutcomeId = 'LU1' | 'LU2' | 'LU3' | 'LU4' | 'LU5';
 
-export type StoryType = 'Research Story' | 'User Story' | 'Learning Story' | 'Reflectie' | 'Overig';
+export type StoryType = 'Research Story' | 'User Story' | 'Learning Story';
 
 export type EvidenceFormat = 'Document' | 'Video' | 'Prototype' | 'GitHub' | 'Presentatie' | 'Binnenkort';
 
@@ -51,7 +51,6 @@ export interface ProjectPOC {
   sprint: number;
   tools: string[];
   relatedLUs: LearningOutcomeId[];
-  previewImage?: string;
   liveUrl?: string;
   codeUrl?: string;
 }
@@ -83,11 +82,14 @@ export interface AboutData {
   passions: {
     title: string;
     description: string;
-    imageUrl: string;
+    iconName: string;
   }[];
+  dreamsText: string;
   aiVision: string[];
-  photos: {
-    hero: string;
-    about: string;
+  email: string;
+  location: string;
+  socialLinks: {
+    linkedin: string;
+    github: string;
   };
 }

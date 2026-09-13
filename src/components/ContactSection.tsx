@@ -1,238 +1,132 @@
-import React, { useState } from 'react';
-import { Mail, Linkedin, Github, Send, CheckCircle2, MessageSquare, ArrowUpRight } from 'lucide-react';
+import React from 'react';
+import { Mail, Linkedin, Github, MapPin, GraduationCap, ArrowUpRight } from 'lucide-react';
+import { aboutData } from '../data/portfolioData';
 
 export const ContactSection: React.FC = () => {
-  const [formState, setFormState] = useState({
-    name: '',
-    email: '',
-    role: 'Beoordelaar / Docent HU',
-    message: '',
-  });
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formState.name || !formState.email || !formState.message) return;
-    setSubmitted(true);
-  };
-
   return (
-    <section id="contact" className="py-20 bg-[#FAF8F5]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="py-24 px-6 bg-white border-b border-[#e4e7ea]">
+      <div className="max-w-[1120px] mx-auto">
         
-        {/* Header */}
-        <div className="max-w-3xl mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-[#F4EFE6] text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-3">
-            <span>Direct Contact & Connectie</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1A2E4A] tracking-tight">
-            Laten We in Contact Komen
+        {/* Section Header with Eyebrow */}
+        <div className="max-w-2xl mb-12">
+          <span className="text-[#121D2F] font-bold text-[13px] tracking-[0.06em] uppercase block mb-3.5">
+            Contact & Verbinding
+          </span>
+          <h2 className="text-3xl sm:text-[34px] font-bold text-[#121D2F] leading-tight mb-2">
+            Direct in Contact Komen
           </h2>
-          <p className="mt-3 text-lg text-[#556980]">
-            Heb je feedback op mijn bewijsstukken, vragen over het minor-onderzoek of 
-            wil je sparren over AI in het commerciële vakgebied? Neem gerust contact op.
+          <p className="text-[16px] text-[#4a5b6b] leading-relaxed">
+            Heb je vragen over een van de bewijsstukken, feedback op een uitwerking of interesse in 
+            een AI-proof-of-concept voor jouw organisatie? Neem direct contact op via onderstaande kanalen.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+        {/* Main Contact Container (Reference card style) */}
+        <div className="bg-[#f6f7f8] rounded-[6px] border border-[#e4e7ea] p-8 lg:p-12">
           
-          {/* Left Column: Direct Channels & Socials */}
-          <div className="lg:col-span-5 space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E8E1D5] shadow-xs space-y-6">
-              
-              <div className="space-y-2">
-                <h3 className="text-xl font-bold text-[#1A2E4A]">
-                  Directe Contactgegevens
-                </h3>
-                <p className="text-xs text-[#6C7E92]">
-                  Bereikbaar voor docenten, mentoren, praktijkpartners en medestudenten.
+            {/* Left Column: Direct Action Buttons (No Form!) */}
+            <div className="lg:col-span-7 space-y-6">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-[0.06em] text-[#121D2F] block mb-2">
+                  Directe Contactknoppen
+                </span>
+                <p className="text-[15px] text-[#4a5b6b] leading-relaxed">
+                  Kies je gewenste medium om een bericht te sturen of mijn professionele netwerk te bekijken:
                 </p>
               </div>
 
-              {/* Email Card */}
-              <a
-                href="mailto:josse.mast@gmail.com"
-                className="flex items-center justify-between p-4 rounded-2xl bg-[#FAF8F5] border border-[#E8E1D5] hover:border-[#1A2E4A] transition-all group"
-              >
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#1A2E4A] text-white flex items-center justify-center">
-                    <Mail className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-[#6C7E92] font-medium">E-mailadres</div>
-                    <div className="text-sm font-bold text-[#1A2E4A] group-hover:text-[#2C476F]">
-                      josse.mast@gmail.com
-                    </div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-[#C58B2E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+              {/* Action Buttons Stack (16px 30px, 4px radius, bold) */}
+              <div className="flex flex-wrap gap-4 pt-2">
+                {/* 1. Direct Mailen (Accentblauw #3762AB) */}
+                <a
+                  href={`mailto:${aboutData.email}`}
+                  className="inline-flex items-center justify-center gap-2.5 bg-[#3762AB] hover:bg-[#2b4d87] text-white py-4 px-[30px] rounded-[4px] font-bold text-[16px] transition-colors shadow-xs"
+                >
+                  <Mail className="w-5 h-5" />
+                  <span>Direct Mailen</span>
+                </a>
 
-              {/* LinkedIn Card */}
-              <a
-                href="https://www.linkedin.com/in/josse-van-der-mast-1111b7292/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-4 rounded-2xl bg-[#FAF8F5] border border-[#E8E1D5] hover:border-[#1A2E4A] transition-all group"
-              >
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#0077B5] text-white flex items-center justify-center">
-                    <Linkedin className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-[#6C7E92] font-medium">LinkedIn Profiel</div>
-                    <div className="text-sm font-bold text-[#1A2E4A] group-hover:text-[#2C476F]">
-                      Josse van der Mast
-                    </div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-[#C58B2E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
+                {/* 2. LinkedIn Profiel (Navy #121D2F) */}
+                <a
+                  href={aboutData.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 bg-[#121D2F] hover:bg-[#2b4d87] text-white py-4 px-[30px] rounded-[4px] font-bold text-[16px] transition-colors shadow-xs"
+                >
+                  <Linkedin className="w-5 h-5" />
+                  <span>LinkedIn-profiel</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-70" />
+                </a>
 
-              {/* GitHub Card */}
-              <a
-                href="https://github.com/jossevandermast"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-between p-4 rounded-2xl bg-[#FAF8F5] border border-[#E8E1D5] hover:border-[#1A2E4A] transition-all group"
-              >
-                <div className="flex items-center gap-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#24292E] text-white flex items-center justify-center">
-                    <Github className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-[#6C7E92] font-medium">GitHub Repository & Code</div>
-                    <div className="text-sm font-bold text-[#1A2E4A] group-hover:text-[#2C476F]">
-                      github.com/jossevandermast
-                    </div>
-                  </div>
-                </div>
-                <ArrowUpRight className="w-4 h-4 text-[#C58B2E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-
-              {/* Institution note */}
-              <div className="p-4 rounded-2xl bg-[#F4EFE6] border border-[#E0D7C6] text-xs text-[#52667A] space-y-1">
-                <div className="font-bold text-[#1A2E4A]">Hogeschool Utrecht (HU)</div>
-                <p>Opleiding Commerciële Economie • Minor Future-proof met AI! (2026)</p>
+                {/* 3. GitHub Profiel */}
+                <a
+                  href={aboutData.socialLinks.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 bg-white hover:bg-[#e4e7ea] text-[#121D2F] border border-[#e4e7ea] py-4 px-[30px] rounded-[4px] font-bold text-[16px] transition-colors"
+                >
+                  <Github className="w-5 h-5" />
+                  <span>GitHub Repository</span>
+                  <ArrowUpRight className="w-4 h-4 opacity-70" />
+                </a>
               </div>
-
             </div>
 
-          </div>
-
-          {/* Right Column: Interactive Message Box */}
-          <div className="lg:col-span-7">
-            <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#E8E1D5] shadow-xs">
+            {/* Right Column: Contact Details Cards */}
+            <div className="lg:col-span-5 space-y-4">
               
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h3 className="text-xl font-bold text-[#1A2E4A]">
-                    Stuur een Bericht of Feedback
-                  </h3>
-                  <p className="text-xs text-[#6C7E92] mt-0.5">
-                    Feedback op een specifiek bewijsstuk of voorstel tot samenwerking?
-                  </p>
+              <div className="bg-white p-5 rounded-[6px] border border-[#e4e7ea] flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5" />
                 </div>
-                <div className="p-2.5 rounded-xl bg-[#F4EFE6] text-[#1A2E4A]">
-                  <MessageSquare className="w-5 h-5" />
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.06em] text-[#4a5b6b]">
+                    E-mailadres
+                  </div>
+                  <a
+                    href={`mailto:${aboutData.email}`}
+                    className="text-[15px] font-bold text-[#121D2F] hover:text-[#3762AB] transition-colors"
+                  >
+                    {aboutData.email}
+                  </a>
                 </div>
               </div>
 
-              {submitted ? (
-                <div className="p-8 text-center bg-[#FAF8F5] rounded-2xl border border-[#E0D7C6] space-y-3 animate-in fade-in duration-300">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-                    <CheckCircle2 className="w-6 h-6" />
-                  </div>
-                  <h4 className="text-lg font-bold text-[#1A2E4A]">
-                    Hartelijk dank voor je bericht!
-                  </h4>
-                  <p className="text-xs text-[#556980] max-w-md mx-auto leading-relaxed">
-                    Ik heb je bericht ontvangen en neem zo snel mogelijk contact met je op via {formState.email}.
-                  </p>
-                  <button
-                    onClick={() => {
-                      setSubmitted(false);
-                      setFormState({ name: '', email: '', role: 'Beoordelaar / Docent HU', message: '' });
-                    }}
-                    className="mt-3 inline-flex items-center px-4 py-2 rounded-xl text-xs font-bold text-[#1A2E4A] bg-[#F4EFE6] hover:bg-[#EBE2D3]"
-                  >
-                    Nog een bericht sturen
-                  </button>
+              <div className="bg-white p-5 rounded-[6px] border border-[#e4e7ea] flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-5 h-5" />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-1.5">
-                        Naam *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={formState.name}
-                        onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                        placeholder="Bijv. Jan de Vries"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#D5CABE] bg-[#FAF8F5] text-sm text-[#1A2E4A] focus:bg-white focus:ring-2 focus:ring-[#1A2E4A] focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-1.5">
-                        E-mailadres *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={formState.email}
-                        onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                        placeholder="naam@organisatie.nl"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-[#D5CABE] bg-[#FAF8F5] text-sm text-[#1A2E4A] focus:bg-white focus:ring-2 focus:ring-[#1A2E4A] focus:outline-none"
-                      />
-                    </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.06em] text-[#4a5b6b]">
+                    Instelling & Opleiding
                   </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-1.5">
-                      Rol / Relatie
-                    </label>
-                    <select
-                      value={formState.role}
-                      onChange={(e) => setFormState({ ...formState, role: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#D5CABE] bg-[#FAF8F5] text-sm text-[#1A2E4A] focus:bg-white focus:ring-2 focus:ring-[#1A2E4A] focus:outline-none font-medium"
-                    >
-                      <option value="Beoordelaar / Docent HU">Beoordelaar / Docent HU</option>
-                      <option value="Minor Medestudent">Minor Medestudent</option>
-                      <option value="Praktijkpartner / Werkgever">Praktijkpartner / Bedrijf</option>
-                      <option value="Overig">Overig</option>
-                    </select>
+                  <div className="text-[14px] font-bold text-[#121D2F]">
+                    Hogeschool Utrecht • Commerciële Economie
                   </div>
-
-                  <div>
-                    <label className="block text-xs font-bold uppercase tracking-wider text-[#1A2E4A] mb-1.5">
-                      Bericht of Feedback *
-                    </label>
-                    <textarea
-                      rows={4}
-                      required
-                      value={formState.message}
-                      onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                      placeholder="Laat hier je opmerkingen, feedback op bewijsstukken of contactverzoek achter..."
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-[#D5CABE] bg-[#FAF8F5] text-sm text-[#1A2E4A] focus:bg-white focus:ring-2 focus:ring-[#1A2E4A] focus:outline-none resize-none"
-                    />
+                  <div className="text-xs text-[#4a5b6b]">
+                    Minor Future-proof met AI! (2026)
                   </div>
+                </div>
+              </div>
 
-                  <button
-                    type="submit"
-                    className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl bg-[#1A2E4A] hover:bg-[#2C476F] text-white text-xs font-bold shadow-sm hover:shadow transition-all"
-                  >
-                    <Send className="w-4 h-4 text-[#E8A948]" />
-                    <span>Verstuur Bericht</span>
-                  </button>
-                </form>
-              )}
+              <div className="bg-white p-5 rounded-[6px] border border-[#e4e7ea] flex items-center gap-4">
+                <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center shrink-0">
+                  <MapPin className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs font-bold uppercase tracking-[0.06em] text-[#4a5b6b]">
+                    Standplaats
+                  </div>
+                  <div className="text-[14px] font-bold text-[#121D2F]">
+                    {aboutData.location}
+                  </div>
+                </div>
+              </div>
 
             </div>
+
           </div>
 
         </div>

@@ -1,140 +1,139 @@
 import React from 'react';
-import { ArrowRight, BookOpen, FileCode, CheckCircle2, Compass, ShieldCheck } from 'lucide-react';
-import { aboutData } from '../data/portfolioData';
+import { ArrowRight, BookOpen, Compass, CheckCircle2, FileText, Sparkles } from 'lucide-react';
 
 export const HeroSection: React.FC = () => {
   return (
-    <section className="relative overflow-hidden pt-8 pb-16 lg:pt-14 lg:pb-24 border-b border-[#EAE3D6]">
-      {/* Subtle background decoration */}
-      <div className="absolute inset-0 pointer-events-none opacity-40">
-        <div className="absolute -top-32 right-10 w-96 h-96 rounded-full bg-[#EADCC8] blur-3xl" />
-        <div className="absolute top-48 -left-20 w-80 h-80 rounded-full bg-[#D4E0EE] blur-3xl" />
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+    <section className="relative bg-gradient-to-br from-[#0c1420] via-[#121D2F] to-[#25467d] text-white py-20 lg:py-24 px-6">
+      <div className="max-w-[1120px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
           {/* Left Column: Core Narrative */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <div className="lg:col-span-8 space-y-6">
             
-            {/* Context Pill */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F4EFE6] border border-[#E0D7C6] text-xs font-semibold text-[#1A2E4A]">
-              <span className="w-2 h-2 rounded-full bg-[#C58B2E] animate-pulse"></span>
-              <span>Hogeschool Utrecht • Minor Future-proof met AI! (2026)</span>
-            </div>
+            {/* Eyebrow */}
+            <span className="text-[#9cbce8] font-bold text-[13px] tracking-[0.06em] uppercase block">
+              Hogeschool Utrecht • Minor Future-proof met AI! (2026)
+            </span>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold text-[#1A2E4A] tracking-tight leading-[1.15]">
-              AI in de Commerciële Beroepspraktijk:{' '}
-              <span className="text-[#35537E]">Onderzoeken, Bouwen & Verantwoorden.</span>
+            {/* Main Headline (48px, line-height 1.15, bold 700) */}
+            <h1 className="text-3xl sm:text-[44px] lg:text-[48px] font-bold text-white leading-[1.15] tracking-tight">
+              AI in de Commerciële Beroepspraktijk: Onderzoeken, Bouwen & Verantwoorden
             </h1>
 
             {/* Subtitle / Intro */}
-            <p className="text-lg sm:text-xl text-[#4A5D73] leading-relaxed max-w-2xl font-normal">
-              Welkom op het centrale portfolio van <strong className="text-[#1A2E4A] font-semibold">Josse van der Mast</strong>. 
-              Hier verzamel ik al het bewijsmateriaal van wat ik onderzoek, ontwerp en leer tijdens de 20-weekse minor, 
-              volledig gekoppeld aan de <strong className="text-[#1A2E4A] font-semibold">5 leeruitkomsten (LU1 t/m LU5)</strong>.
+            <p className="text-base sm:text-[18px] text-white/90 leading-relaxed max-w-2xl font-normal">
+              Welkom op het centrale portfolio van <strong>Josse van der Mast</strong>. Hier verzamel ik 
+              al het bewijsmateriaal van wat ik onderzoek, ontwerp en leer tijdens deze 20-weekse minor, 
+              volledig gestructureerd rondom de <strong>5 officiële leeruitkomsten (LU1 t/m LU5)</strong>.
             </p>
 
-            {/* Minor Mechanism Explanation (Sprint context) */}
-            <div className="p-4 rounded-xl bg-[#FFFFFF] border border-[#E8E1D5] shadow-xs space-y-2">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#C58B2E] flex items-center gap-1.5">
-                <Compass className="w-3.5 h-3.5" />
-                Wat je op deze site kunt verwachten
-              </div>
-              <p className="text-sm text-[#4A5D73] leading-normal">
-                De minor is opgebouwd uit sprints van twee weken met drie pijlers: 
-                <strong className="text-[#1A2E4A]"> Research Stories</strong> (onderzoek naar AI-impact in sales), 
-                <strong className="text-[#1A2E4A]"> User Stories</strong> (het bouwen van werkende AI proof-of-concepts) en 
-                <strong className="text-[#1A2E4A]"> Learning Stories</strong> (nieuwe AI-vaardigheden & ethische kaders).
-              </p>
+            {/* Hero Tags */}
+            <div className="flex flex-wrap gap-x-6 gap-y-2 text-[14px] text-white/85 pt-1">
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB]"></span>
+                Commerciële Economie
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB]"></span>
+                20 Weken • 10 Sprints
+              </span>
+              <span className="flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB]"></span>
+                Research, User & Learning Stories
+              </span>
             </div>
 
-            {/* Primary Action Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
+            {/* Action Buttons (16px 30px, radius 4px, font-bold) */}
+            <div className="pt-4 flex flex-wrap items-center gap-4">
               <a
                 href="#leeruitkomsten"
-                className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-bold text-white bg-[#1A2E4A] hover:bg-[#2C476F] shadow-sm hover:shadow transition-all group"
+                className="inline-flex items-center justify-center gap-2.5 bg-[#3762AB] hover:bg-[#2b4d87] text-white py-4 px-[30px] rounded-[4px] font-bold text-[16px] transition-colors"
               >
-                <BookOpen className="w-4 h-4 text-[#E8A948]" />
                 <span>Bekijk Bewijsstukken per LU</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4" />
               </a>
 
               <a
                 href="#onderzoek"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-bold text-[#1A2E4A] bg-[#F4EFE6] hover:bg-[#EBE2D3] border border-[#DDD3C2] transition-colors"
+                className="inline-flex items-center justify-center bg-white/10 hover:bg-white/15 text-white border border-white/20 py-4 px-[30px] rounded-[4px] font-bold text-[16px] transition-colors"
               >
                 <span>Onderzoeksplan</span>
               </a>
 
               <a
                 href="#over-mij"
-                className="inline-flex items-center justify-center px-4 py-3.5 text-sm font-semibold text-[#5A6D82] hover:text-[#1A2E4A] transition-colors"
+                className="inline-flex items-center justify-center text-white/80 hover:text-white py-4 px-4 font-semibold text-[15px] transition-colors"
               >
-                Wie is Josse?
+                Wie is Josse? →
               </a>
-            </div>
-
-            {/* Quick Metrics Bar */}
-            <div className="pt-4 grid grid-cols-3 gap-3 max-w-lg border-t border-[#EAE3D6]">
-              <div>
-                <div className="text-2xl font-extrabold text-[#1A2E4A]">20</div>
-                <div className="text-xs font-medium text-[#64748B]">Weken Minor</div>
-              </div>
-              <div>
-                <div className="text-2xl font-extrabold text-[#1A2E4A]">10</div>
-                <div className="text-xs font-medium text-[#64748B]">Agile Sprints</div>
-              </div>
-              <div>
-                <div className="text-2xl font-extrabold text-[#C58B2E]">5</div>
-                <div className="text-xs font-medium text-[#64748B]">Leeruitkomsten (LU)</div>
-              </div>
             </div>
 
           </div>
 
-          {/* Right Column: Visual Portrait & Credentials Card */}
-          <div className="lg:col-span-5 flex flex-col items-center">
-            <div className="relative w-full max-w-sm">
+          {/* Right Column: Text & Metrics Card (Geen foto's) */}
+          <div className="lg:col-span-4">
+            <div className="bg-white/5 border border-white/15 rounded-[6px] p-6 lg:p-7 backdrop-blur-xs space-y-6">
               
-              {/* Outer decorative halo */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-[#1A2E4A] to-[#C58B2E] opacity-15 transform rotate-2"></div>
-              
-              {/* Main Photo Card */}
-              <div className="relative bg-[#FFFFFF] p-3 rounded-2xl border border-[#E8E1D5] shadow-lg">
-                <div className="overflow-hidden rounded-xl aspect-[4/5] relative bg-[#E8E1D5]">
-                  <img
-                    src={aboutData.photos.hero}
-                    alt={aboutData.name}
-                    className="w-full h-full object-cover object-top hover:scale-102 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0F1C2E]/90 via-[#0F1C2E]/40 to-transparent p-5 text-white">
-                    <div className="text-lg font-bold">{aboutData.name}</div>
-                    <div className="text-xs text-[#EADCC8]">{aboutData.role}</div>
+              <div className="space-y-2">
+                <span className="text-[#9cbce8] font-bold text-[11px] tracking-[0.06em] uppercase block">
+                  Minor Inrichting
+                </span>
+                <h3 className="text-xl font-bold text-white">
+                  3 Typen Verhalen
+                </h3>
+                <p className="text-xs text-white/80 leading-relaxed">
+                  De minor hanteert een Agile aanpak verdeeld over 10 tweewekelijkse sprints:
+                </p>
+              </div>
+
+              <div className="space-y-3.5">
+                <div className="p-3.5 rounded-[4px] bg-white/5 border border-white/10">
+                  <div className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#3762AB]"></span>
+                    Research Stories
                   </div>
+                  <p className="text-[12px] text-white/75 mt-1">
+                    Academisch en praktijkonderzoek naar AI-transformatie in verkoop en klantcontact.
+                  </p>
                 </div>
 
-                {/* Sub-card info */}
-                <div className="mt-3 p-3 bg-[#FAF8F5] rounded-xl border border-[#EFE8DD] flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-5 h-5 text-[#52796F]" />
-                    <div className="text-xs text-[#1A2E4A]">
-                      <span className="font-semibold block">Beoordelingsportfolio</span>
-                      <span className="text-[#64748B]">Minor Future-proof met AI</span>
-                    </div>
+                <div className="p-3.5 rounded-[4px] bg-white/5 border border-white/10">
+                  <div className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#3762AB]"></span>
+                    User Stories
                   </div>
-                  <span className="inline-flex items-center px-2 py-1 rounded text-[11px] font-bold bg-[#E7EEF6] text-[#1A2E4A]">
-                    HU Utrecht
-                  </span>
+                  <p className="text-[12px] text-white/75 mt-1">
+                    Functionele AI proof-of-concepts, prototypes en tastbare automatiseringstools.
+                  </p>
+                </div>
+
+                <div className="p-3.5 rounded-[4px] bg-white/5 border border-white/10">
+                  <div className="text-xs font-bold text-white flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full bg-[#3762AB]"></span>
+                    Learning Stories
+                  </div>
+                  <p className="text-[12px] text-white/75 mt-1">
+                    Nieuwe AI-technieken beheersen, prompting logboeken en zelfreflectie.
+                  </p>
                 </div>
               </div>
 
-              {/* Float Badge */}
-              <div className="absolute -bottom-4 -left-4 bg-[#1A2E4A] text-white py-2 px-3.5 rounded-xl shadow-md border border-[#2C476F] flex items-center gap-2 text-xs font-semibold">
-                <CheckCircle2 className="w-4 h-4 text-[#C58B2E]" />
-                <span>LU1 t/m LU5 Gedekt</span>
+              {/* Metrics grid */}
+              <div className="pt-4 border-t border-white/15 grid grid-cols-3 gap-2 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-white">20</div>
+                  <div className="text-[11px] text-white/70">Weken</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-white">10</div>
+                  <div className="text-[11px] text-white/70">Sprints</div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-[#9cbce8]">5</div>
+                  <div className="text-[11px] text-white/70">Leeruitkomsten</div>
+                </div>
               </div>
+
             </div>
           </div>
 

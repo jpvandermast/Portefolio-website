@@ -39,26 +39,30 @@ export const aboutData: AboutData = {
     {
       title: 'De Sportschool',
       description: 'Al ruim vier jaar ben ik hier bijna dagelijks te vinden. Voor mij dé manier om fysiek en mentaal fit te blijven, discipline vast te houden en met een leeg hoofd aan de dag te beginnen.',
-      imageUrl: 'https://jossevandermast.nl/wp-content/uploads/2026/04/gymdesign_render_Two_collumn_grid_cb1b5850-fa8e-4a7b-a2b3-190c2e45facd.jpg.webp',
+      iconName: 'Dumbbell',
     },
     {
       title: 'Festivals & Muziek',
       description: 'Muziek is een constante energiebron. Ik bezoek graag festivals met vrienden om live optredens te beleven en nieuwe inspiratie en connecties op te doen.',
-      imageUrl: 'https://jossevandermast.nl/wp-content/uploads/2026/04/Roskilde-Festival_Thomas-Hoyrup-Christensen-1.jpg',
+      iconName: 'Music',
     },
     {
       title: 'Nieuwe AI-tools ontdekken',
       description: 'Door de razendsnelle opkomst van AI probeer ik wekelijks nieuwe modellen, agent-frameworks en workflow-automations uit om direct te zien wat in de praktijk werkt.',
-      imageUrl: 'https://jossevandermast.nl/wp-content/uploads/2026/04/where-is-ai-used.jpg',
+      iconName: 'Cpu',
     },
   ],
+  dreamsText:
+    'Na mijn studietijd wil ik eerst nog volop genieten van het studentenleven, om er daarna even tussenuit te gaan en te reizen. Daarna wil ik het liefst zo snel mogelijk iets voor mezelf beginnen — al sluit ik niet uit dat ik eerst een paar jaar werkervaring opdoe bij een bedrijf waar ik veel kan leren, om vanuit dat vakgebied later zelf iets op te zetten. In welke richting precies weet ik nog niet zeker, maar naarmate de tijd vordert merk ik dat het steeds meer richting AI trekt. Vandaar dat ik deze minor volg, en ook nu al de eerste stappen zet als ondernemer in AI-gedreven webdevelopment. Of dit uiteindelijk groot wordt is de vraag, maar het is voor mij een mooie manier om tegelijk ervaring op te doen met zowel AI als ondernemerschap.',
   aiVision: [
     'AI ontwikkelt zich exponentieel en transformeert organisaties over de hele breedte. Het neemt routinematige werkzaamheden en data-intensieve analyses over, maar het menselijk oordeel, morele besef en empathie blijven onvervangbaar.',
     'In commerciële functies wordt AI geen vervanger van de professional, maar een co-pilot: professionals die AI effectief inzetten zullen diegenen inhalen die achterblijven. Daarom richt ik mijn minor op hands-on tooling, ethische kaders en strategische impact.'
   ],
-  photos: {
-    hero: 'https://jossevandermast.nl/wp-content/uploads/2026/05/IMG_5437-1-scaled.jpeg',
-    about: 'https://jossevandermast.nl/wp-content/uploads/2026/05/IMG_5435-scaled.jpeg',
+  email: 'jossevandermast@gmail.com',
+  location: 'Utrecht, Nederland',
+  socialLinks: {
+    linkedin: 'https://www.linkedin.com/in/josse-van-der-mast-7b703a207/',
+    github: 'https://github.com/jossevandermast',
   },
 };
 
@@ -74,7 +78,7 @@ export const learningOutcomes: LearningOutcome[] = [
       'Kwantitatieve en kwalitatieve onderbouwing met vakliteratuur en experts',
       'Concrete impact op taken, workflows en vereiste competenties'
     ],
-    colorBadge: 'bg-[#1A2E4A] text-white',
+    colorBadge: 'bg-[#121D2F] text-white',
   },
   {
     id: 'LU2',
@@ -87,7 +91,7 @@ export const learningOutcomes: LearningOutcome[] = [
       'Functioneel ontworpen en getest AI-prototype / proof-of-concept',
       'Heldere en professionele presentatie/pitch van de werking en meerwaarde'
     ],
-    colorBadge: 'bg-[#C58B2E] text-white',
+    colorBadge: 'bg-[#1a2d47] text-white',
   },
   {
     id: 'LU3',
@@ -100,7 +104,7 @@ export const learningOutcomes: LearningOutcome[] = [
       'Identificatie van bias, hallucinaties en privacyrisico’s',
       'Gefundeerde afweging tussen efficiëntie en menselijke autonomie'
     ],
-    colorBadge: 'bg-[#52796F] text-white',
+    colorBadge: 'bg-[#253e63] text-white',
   },
   {
     id: 'LU4',
@@ -113,7 +117,7 @@ export const learningOutcomes: LearningOutcome[] = [
       'Evaluatie van de prestaties, kosten en beperkingen van verschillende tools',
       'Documentatie van prompts, architectuur en technische keuzes'
     ],
-    colorBadge: 'bg-[#35537E] text-white',
+    colorBadge: 'bg-[#2f5082] text-white',
   },
   {
     id: 'LU5',
@@ -126,7 +130,7 @@ export const learningOutcomes: LearningOutcome[] = [
       'Actief ophalen, documenteren en toepassen van peer- en docentfeedback',
       'Diepgaande reflecties op de eigen professionele groei als AI-professional'
     ],
-    colorBadge: 'bg-[#4A7FB5] text-white',
+    colorBadge: 'bg-[#3762AB] text-white',
   },
 ];
 
@@ -188,7 +192,7 @@ export const initialEvidenceItems: EvidenceItem[] = [
     luId: 'LU3',
     title: 'Ethische Quickscan & EU AI Act Toetsing',
     description: 'Risicoclassificatie van geautomatiseerde sales-assistenten op basis van de Europese AI Act en formulering van maatregelen tegen hallucinerende data.',
-    storyType: 'Reflectie',
+    storyType: 'Research Story',
     format: 'Document',
     status: 'In uitvoering',
     sprint: 3,
@@ -253,7 +257,7 @@ export const initialEvidenceItems: EvidenceItem[] = [
     luId: 'LU5',
     title: 'Mid-term Evaluatie & Zelfreflectieverslag (Binnenkort)',
     description: 'Uitgebreide zelfreflectie na week 10 over leervoortgang, samenwerking en competentieontwikkeling als zelfsturend AI-professional.',
-    storyType: 'Reflectie',
+    storyType: 'Learning Story',
     format: 'Binnenkort',
     status: 'Binnenkort',
     sprint: 5,
@@ -289,7 +293,6 @@ export const initialProjects: ProjectPOC[] = [
     sprint: 2,
     tools: ['Gemini API', 'React', 'Tailwind CSS', 'TypeScript'],
     relatedLUs: ['LU2', 'LU4'],
-    previewImage: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80',
     liveUrl: '#',
     codeUrl: '#',
   },
@@ -302,7 +305,6 @@ export const initialProjects: ProjectPOC[] = [
     sprint: 4,
     tools: ['Speech-to-Text', 'NLP / LLM', 'Python / FastApi'],
     relatedLUs: ['LU2', 'LU3', 'LU4'],
-    previewImage: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80',
     liveUrl: '',
     codeUrl: '',
   },
@@ -315,7 +317,6 @@ export const initialProjects: ProjectPOC[] = [
     sprint: 6,
     tools: ['Guardrails AI', 'Vulnerability Assessment', 'API'],
     relatedLUs: ['LU1', 'LU3'],
-    previewImage: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80',
     liveUrl: '',
     codeUrl: '',
   },
