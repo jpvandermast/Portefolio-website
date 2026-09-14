@@ -14,7 +14,7 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#22303f] font-sans antialiased selection:bg-[#3762AB] selection:text-white">
       {/* Top Navigation */}
-      <Navbar currentSprint={1} />
+      <Navbar />
 
       {/* Main Content Sections in requested sequence */}
       <main className="flex-1">

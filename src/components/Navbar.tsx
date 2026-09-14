@@ -5,7 +5,7 @@ interface NavbarProps {
   currentSprint?: number;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ currentSprint = 1 }) => {
+export const Navbar: React.FC<NavbarProps> = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
@@ -28,9 +28,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentSprint = 1 }) => {
               JM
             </span>
             <span>Josse van der Mast</span>
-            <span className="hidden xl:inline-block text-xs font-normal text-[#6c7d8f] border-l border-[#e4e7ea] pl-2.5 ml-1">
-              Minor AI • Sprint {currentSprint}
-            </span>
           </a>
 
           {/* Desktop Navigation (Visible only from lg breakpoint, with tight responsive spacing) */}
