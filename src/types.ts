@@ -61,9 +61,9 @@ export interface SprintData {
   theme: string;
   status: 'Afgerond' | 'Huidige sprint' | 'Gepland';
   stories: {
-    research: string;
-    userStory: string;
-    learningStory: string;
+    research: string[];
+    userStory: string[];
+    learningStory: string[];
   };
 }
 

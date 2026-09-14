@@ -35,7 +35,7 @@ export const HeroSection: React.FC = () => {
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB]"></span>
-                20 Weken • 10 Sprints
+                20 Weken • 8 Sprints
               </span>
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB]"></span>
@@ -82,7 +82,7 @@ export const HeroSection: React.FC = () => {
                   3 Typen Verhalen
                 </h3>
                 <p className="text-xs text-white/80 leading-relaxed">
-                  De minor hanteert een Agile aanpak verdeeld over 10 tweewekelijkse sprints:
+                  De minor hanteert een Agile aanpak verdeeld over 8 tweewekelijkse sprints:
                 </p>
               </div>
 
@@ -125,7 +125,7 @@ export const HeroSection: React.FC = () => {
                   <div className="text-[11px] text-white/70">Weken</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-white">10</div>
+                  <div className="text-2xl font-bold text-white">8</div>
                   <div className="text-[11px] text-white/70">Sprints</div>
                 </div>
                 <div>

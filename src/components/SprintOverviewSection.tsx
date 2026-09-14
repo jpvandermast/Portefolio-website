@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Code2, Brain, ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { Search, Code2, Brain, ChevronLeft, ChevronRight } from 'lucide-react';
 import { sprintTimeline } from '../data/portfolioData';
 
 export const SprintOverviewSection: React.FC = () => {
@@ -19,7 +19,7 @@ export const SprintOverviewSection: React.FC = () => {
             20 Weken Sprint-overzicht & Tijdlijn
           </h2>
           <p className="text-[16px] text-[#4a5b6b] leading-relaxed">
-            De minor is opgebouwd uit 10 tweewekelijkse sprints volgens de Scrum/Agile-methodiek. 
+            De minor is opgebouwd uit 8 tweewekelijkse sprints volgens de Scrum/Agile-methodiek. 
             Elke sprint omvat drie verhaallijnen: Research (onderzoek), User (bouwen) en Learning (vaardigheden).
           </p>
         </div>
@@ -31,7 +31,7 @@ export const SprintOverviewSection: React.FC = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-[#e4e7ea]">
             <div>
               <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
-                Sprintselector (1 t/m 10)
+                Sprintselector (1 t/m 8)
               </div>
               <div className="text-xs text-[#4a5b6b] mt-0.5">
                 Klik op een sprint om de bijbehorende stories en leeruitkomsten te bekijken
@@ -59,8 +59,8 @@ export const SprintOverviewSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Visual Sprint Pills Bar */}
-          <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 mb-8">
+          {/* Visual Sprint Pills Bar - 8 sprints */}
+          <div className="grid grid-cols-4 sm:grid-cols-8 gap-2 mb-8">
             {sprintTimeline.map((sprint, idx) => {
               const isCurrent = sprint.status === 'Huidige sprint';
               const isSelected = activeSprintIndex === idx;
@@ -127,14 +127,21 @@ export const SprintOverviewSection: React.FC = () => {
                     <Search className="w-5 h-5 stroke-[2]" />
                   </div>
                   <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
-                    Research Story
+                    Research Story ({selectedSprint.stories.research.length})
                   </div>
-                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-2">
+                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">
                     Onderzoek naar AI-impact
                   </h4>
-                  <p className="text-[13px] text-[#4a5b6b] leading-relaxed">
-                    {selectedSprint.stories.research}
-                  </p>
+                  <div className="space-y-3">
+                    {selectedSprint.stories.research.map((story, i) => (
+                      <div key={i} className="text-[13px] text-[#4a5b6b] leading-relaxed flex items-start gap-2">
+                        {selectedSprint.stories.research.length > 1 && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB] mt-2 shrink-0" />
+                        )}
+                        <span>{story}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
                   Koppeling: LU1 / LU3
@@ -148,14 +155,21 @@ export const SprintOverviewSection: React.FC = () => {
                     <Code2 className="w-5 h-5 stroke-[2]" />
                   </div>
                   <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
-                    User Story
+                    User Story ({selectedSprint.stories.userStory.length})
                   </div>
-                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-2">
+                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">
                     AI-oplossing ontwerpen & bouwen
                   </h4>
-                  <p className="text-[13px] text-[#4a5b6b] leading-relaxed">
-                    {selectedSprint.stories.userStory}
-                  </p>
+                  <div className="space-y-3">
+                    {selectedSprint.stories.userStory.map((story, i) => (
+                      <div key={i} className="text-[13px] text-[#4a5b6b] leading-relaxed flex items-start gap-2">
+                        {selectedSprint.stories.userStory.length > 1 && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB] mt-2 shrink-0" />
+                        )}
+                        <span>{story}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
                   Koppeling: LU2 / LU4
@@ -169,14 +183,21 @@ export const SprintOverviewSection: React.FC = () => {
                     <Brain className="w-5 h-5 stroke-[2]" />
                   </div>
                   <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
-                    Learning Story
+                    Learning Story ({selectedSprint.stories.learningStory.length})
                   </div>
-                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-2">
+                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">
                     Nieuwe tools & zelfsturing
                   </h4>
-                  <p className="text-[13px] text-[#4a5b6b] leading-relaxed">
-                    {selectedSprint.stories.learningStory}
-                  </p>
+                  <div className="space-y-3">
+                    {selectedSprint.stories.learningStory.map((story, i) => (
+                      <div key={i} className="text-[13px] text-[#4a5b6b] leading-relaxed flex items-start gap-2">
+                        {selectedSprint.stories.learningStory.length > 1 && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB] mt-2 shrink-0" />
+                        )}
+                        <span>{story}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
                   Koppeling: LU4 / LU5

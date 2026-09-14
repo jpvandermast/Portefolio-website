@@ -1,16 +1,16 @@
 import React from 'react';
-import { ExternalLink, Code2, Clock, CheckCircle2, Bot, MessageSquare, ShieldCheck, Plus } from 'lucide-react';
+import { ExternalLink, Code2, Bot, Layers, Sparkles } from 'lucide-react';
 import { initialProjects } from '../data/portfolioData';
 
 export const ProjectsSection: React.FC = () => {
-  const getProjectIcon = (id: string) => {
-    switch (id) {
-      case 'poc-1':
+  const getProjectIcon = (index: number) => {
+    switch (index) {
+      case 0:
         return <Bot className="w-6 h-6 stroke-[2]" />;
-      case 'poc-2':
-        return <MessageSquare className="w-6 h-6 stroke-[2]" />;
-      case 'poc-3':
-        return <ShieldCheck className="w-6 h-6 stroke-[2]" />;
+      case 1:
+        return <Layers className="w-6 h-6 stroke-[2]" />;
+      case 2:
+        return <Sparkles className="w-6 h-6 stroke-[2]" />;
       default:
         return <Code2 className="w-6 h-6 stroke-[2]" />;
     }
@@ -34,9 +34,9 @@ export const ProjectsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Project Cards Grid (Diensten-card style, text-only with round navy icon badges, NO images!) */}
+        {/* Project Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {initialProjects.map((project) => {
+          {initialProjects.map((project, idx) => {
             const isDev = project.status === 'In ontwikkeling';
 
             return (
@@ -48,7 +48,7 @@ export const ProjectsSection: React.FC = () => {
                   {/* Top row: Round navy badge & sprint tag */}
                   <div className="flex items-center justify-between mb-5">
                     <div className="w-12 h-12 rounded-full bg-[#121D2F] text-white flex items-center justify-center shrink-0">
-                      {getProjectIcon(project.id)}
+                      {getProjectIcon(idx)}
                     </div>
 
                     <div className="flex items-center gap-2">
@@ -76,50 +76,56 @@ export const ProjectsSection: React.FC = () => {
                     {project.title}
                   </h3>
 
-                  <div className="text-xs text-[#3762AB] font-semibold mb-3">
-                    {project.subtitle}
-                  </div>
+                  {project.subtitle && (
+                    <div className="text-xs text-[#3762AB] font-semibold mb-3">
+                      {project.subtitle}
+                    </div>
+                  )}
 
                   <p className="text-[14px] text-[#4a5b6b] leading-relaxed mb-6">
                     {project.description}
                   </p>
 
-                  {/* Related LUs badges (navy/blue palette) */}
-                  <div className="mb-6">
-                    <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-2">
-                      Gekoppelde Leeruitkomsten:
+                  {/* Related LUs badges if available */}
+                  {project.relatedLUs.length > 0 && (
+                    <div className="mb-6">
+                      <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-2">
+                        Gekoppelde Leeruitkomsten:
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.relatedLUs.map((lu) => (
+                          <span
+                            key={lu}
+                            className="px-2 py-0.5 rounded-[4px] text-[11px] font-bold bg-[#121D2F] text-white"
+                          >
+                            {lu}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.relatedLUs.map((lu) => (
-                        <span
-                          key={lu}
-                          className="px-2 py-0.5 rounded-[4px] text-[11px] font-bold bg-[#121D2F] text-white"
-                        >
-                          {lu}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  )}
 
-                  {/* Tools list */}
-                  <div className="mb-6">
-                    <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-2">
-                      Technologie & Frameworks:
+                  {/* Tools list if available */}
+                  {project.tools.length > 0 && (
+                    <div className="mb-6">
+                      <div className="text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F] mb-2">
+                        Technologie & Frameworks:
+                      </div>
+                      <div className="flex flex-wrap gap-1.5">
+                        {project.tools.map((tool) => (
+                          <span
+                            key={tool}
+                            className="px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-[#f6f7f8] text-[#22303f] border border-[#e4e7ea]"
+                          >
+                            {tool}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {project.tools.map((tool) => (
-                        <span
-                          key={tool}
-                          className="px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-[#f6f7f8] text-[#22303f] border border-[#e4e7ea]"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+                  )}
                 </div>
 
-                {/* Bottom Card Actions (Small rectangular buttons) */}
+                {/* Bottom Card Actions */}
                 <div className="pt-4 border-t border-[#e4e7ea] flex items-center justify-between gap-3 text-xs">
                   {project.liveUrl && project.liveUrl !== '#' ? (
                     <a
@@ -162,10 +168,10 @@ export const ProjectsSection: React.FC = () => {
             </div>
             <div>
               <div className="text-[15px] font-bold text-[#121D2F]">
-                Volgende Proof-of-Concepts (Sprints 7 t/m 10)
+                Volgende Proof-of-Concepts (latere sprints)
               </div>
               <p className="text-[13px] text-[#4a5b6b]">
-                In latere sprints worden geavanceerde RAG-pipelines en agentic workflows gebouwd en gedocumenteerd.
+                In latere sprints worden geavanceerde AI-oplossingen gebouwd en hier gedocumenteerd.
               </p>
             </div>
           </div>
