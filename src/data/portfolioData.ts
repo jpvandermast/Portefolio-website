@@ -1,6 +1,5 @@
 import {
   AboutData,
-  EvidenceItem,
   LearningOutcome,
   ProjectPOC,
   ResearchStory,
@@ -134,8 +133,6 @@ export const learningOutcomes: LearningOutcome[] = [
   },
 ];
 
-export const initialEvidenceItems: EvidenceItem[] = [];
-
 export const researchTopic: ResearchStory = {
   title: 'De Toekomst van AI in het Commerciële Vakgebied: Balans Tussen Automatisering en Menselijk Vertrouwen',
   field: 'Commerciële Economie & AI Beroepspraktijk',
@@ -197,96 +194,47 @@ export const sprintTimeline: SprintData[] = [
     weeks: 'Weken 1 - 2',
     theme: 'Kick-off & Eerste Stories',
     status: 'Huidige sprint',
-    stories: {
-      research: [
-        'Als toekomstig webontwikkelaar wil ik weten wat de impact van AI is op het beroep van webontwikkelaar, zodat ik weet welke AI- en digitale vaardigheden ik moet ontwikkelen om me daarop voor te bereiden.',
-        'Als zelfstandig ondernemer bij JM Presence wil ik weten wat de beste manier is om een factuur te sturen naar een klant voor geleverde diensten, zodat ik een factuur kan opstellen die correct in de boekhouding verwerkt kan worden.'
-      ],
-      userStory: [
-        'Als toekomstig webontwikkelaar wil ik mijn verplichte portfolio-website bouwen met AI Studio (vibe-coding), waarbij ik uitzoek hoe ik de stijl en teksten van mijn bestaande WordPress-website kan overzetten naar de nieuwe website, zodat ik niet alles opnieuw hoef te ontwerpen en schrijven.',
-        'Als eigenaar van JM Presence wil ik een betrouwbaar en gratis CRM-systeem vinden met een integratie om samen te werken met Claude, waarin ik zelf gesourcete potentiële klanten kan bijhouden, zodat ik overzicht houd over mijn leads zonder extra kosten.',
-        'Als eigenaar van JM Presence wil ik de eerste factuur versturen naar mijn klant voor de geleverde website, zodat de betaling correct verwerkt en geboekt kan worden.'
-      ],
-      learningStory: [
-        'Nog geen Learning Story toegevoegd deze sprint'
-      ],
-    },
   },
   {
     sprintNumber: 2,
     weeks: 'Weken 3 - 4',
     theme: 'Sprint 2',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
   {
     sprintNumber: 3,
     weeks: 'Weken 5 - 6',
     theme: 'Sprint 3',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
   {
     sprintNumber: 4,
     weeks: 'Weken 7 - 8',
     theme: 'Sprint 4',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
   {
     sprintNumber: 5,
     weeks: 'Weken 9 - 10',
     theme: 'Sprint 5',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
   {
     sprintNumber: 6,
     weeks: 'Weken 11 - 12',
     theme: 'Sprint 6',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
   {
     sprintNumber: 7,
     weeks: 'Weken 13 - 14',
     theme: 'Sprint 7',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
   {
     sprintNumber: 8,
     weeks: 'Weken 15 - 16',
     theme: 'Sprint 8',
     status: 'Gepland',
-    stories: {
-      research: ['Komt binnenkort'],
-      userStory: ['Komt binnenkort'],
-      learningStory: ['Komt binnenkort'],
-    },
   },
 ];

@@ -1,44 +1,24 @@
 import React, { useState } from 'react';
-import { 
-  FileText, 
-  ExternalLink, 
-  CheckCircle2, 
-  Clock, 
-  Video, 
-  Globe, 
-  Github, 
-  ChevronDown, 
-  ChevronUp, 
+import { Link } from 'react-router';
+import {
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
   BookOpen,
-  Layers,
-  Sparkles
+  ArrowRight,
 } from 'lucide-react';
-import { EvidenceFormat, EvidenceItem, LearningOutcome, LearningOutcomeId } from '../types';
 import { learningOutcomes as defaultLUs } from '../data/portfolioData';
+import { useStories } from '../lib/StoriesContext';
+import { STORY_TYPE_LABELS } from '../lib/stories';
 
-interface LearningOutcomesSectionProps {
-  evidenceList: EvidenceItem[];
-}
-
-export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = ({
-  evidenceList,
-}) => {
+export const LearningOutcomesSection: React.FC = () => {
   const [selectedLuFilter, setSelectedLuFilter] = useState<string>('ALL');
   const [expandedLu, setExpandedLu] = useState<string | null>(null);
+  const { status, stories, reload } = useStories();
 
-  const getFormatIcon = (format: EvidenceFormat) => {
-    switch (format) {
-      case 'Video':
-        return <Video className="w-4 h-4 text-[#3762AB]" />;
-      case 'Prototype':
-        return <Globe className="w-4 h-4 text-[#3762AB]" />;
-      case 'GitHub':
-        return <Github className="w-4 h-4 text-[#121D2F]" />;
-      case 'Document':
-      default:
-        return <FileText className="w-4 h-4 text-[#121D2F]" />;
-    }
-  };
+  // Bewijs = stories gekoppeld aan een LU via story_leeruitkomsten (LU-nummer 1 hoort bij 'LU1')
+  const evidenceFor = (luId: string) => stories.filter((s) => s.lus.includes(Number(luId.replace('LU', ''))));
+  const totalEvidence = stories.reduce((sum, s) => sum + s.lus.length, 0);
 
   const toggleExpand = (id: string) => {
     setExpandedLu(expandedLu === id ? null : id);
@@ -69,7 +49,7 @@ export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = (
 
           {/* Quick Info Pill */}
           <div className="text-[13px] font-semibold text-[#4a5b6b] bg-[#f6f7f8] px-4 py-2.5 rounded-[4px] border border-[#e4e7ea] whitespace-nowrap">
-            Totaal <strong className="text-[#121D2F]">{evidenceList.length}</strong> gedefinieerde bewijsstukken
+            Totaal <strong className="text-[#121D2F]">{status === 'ready' ? totalEvidence : '–'}</strong> gekoppelde bewijsstukken
           </div>
         </div>
 
@@ -107,7 +87,7 @@ export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = (
         <div className="space-y-8">
           {filteredOutcomes.map((lu) => {
             const isExpanded = expandedLu === lu.id;
-            const matchingEvidence = evidenceList.filter((ev) => ev.luId === lu.id);
+            const matchingEvidence = evidenceFor(lu.id);
 
             return (
               <div
@@ -177,75 +157,47 @@ export const LearningOutcomesSection: React.FC<LearningOutcomesSectionProps> = (
                     Gekoppelde Bewijsstukken ({lu.code}):
                   </div>
 
-                  {matchingEvidence.length === 0 ? (
+                  {status === 'loading' ? (
+                    <div role="status" className="text-[14px] text-[#6c7d8f] bg-white p-4 rounded-[4px] border border-[#e4e7ea] animate-pulse">
+                      Bewijsstukken laden…
+                    </div>
+                  ) : status === 'error' ? (
+                    <div role="alert" className="text-[14px] text-[#4a5b6b] bg-white p-4 rounded-[4px] border border-[#e4e7ea] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <span>De bewijsstukken konden niet worden geladen.</span>
+                      <button type="button" onClick={reload} className="bg-[#121D2F] hover:bg-[#2b4d87] text-white py-2 px-4 rounded-[4px] font-bold text-xs self-start">
+                        Opnieuw proberen
+                      </button>
+                    </div>
+                  ) : matchingEvidence.length === 0 ? (
                     <div className="text-[14px] text-[#6c7d8f] italic bg-white p-4 rounded-[4px] border border-[#e4e7ea]">
-                      Nog geen bewijsstukken gekoppeld aan {lu.code}.
+                      Nog geen bewijs gekoppeld aan {lu.code}.
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {matchingEvidence.map((ev) => {
-                        const isAvailable = ev.status !== 'Binnenkort' && ev.linkUrl && ev.linkUrl !== '' && ev.linkUrl !== '#';
-
-                        return (
-                          <div
-                            key={ev.id}
-                            className="bg-white p-5 rounded-[4px] border border-[#e4e7ea] flex flex-col justify-between hover:border-[#cbd2d9] transition-colors"
-                          >
-                            <div>
-                              <div className="flex items-center justify-between gap-2 mb-2.5">
-                                <div className="flex items-center gap-2">
-                                  {getFormatIcon(ev.format)}
-                                  <span className="text-xs font-bold text-[#121D2F]">
-                                    {ev.storyType}
-                                  </span>
-                                </div>
-
-                                <span
-                                  className={`px-2 py-0.5 rounded-[4px] text-[10px] font-bold ${
-                                    ev.status === 'Afgerond'
-                                      ? 'bg-[#eaf4eb] text-[#1e6e29]'
-                                      : ev.status === 'In uitvoering'
-                                      ? 'bg-[#eaf0fa] text-[#2b4d87]'
-                                      : 'bg-[#f0f2f5] text-[#5e6d7d]'
-                                  }`}
-                                >
-                                  {ev.status}
-                                </span>
-                              </div>
-
-                              <h4 className="text-[16px] font-bold text-[#121D2F] mb-1.5 leading-snug">
-                                {ev.title}
-                              </h4>
-
-                              <p className="text-[13px] text-[#4a5b6b] leading-relaxed mb-4">
-                                {ev.description}
-                              </p>
+                      {matchingEvidence.map((ev) => (
+                        <Link
+                          key={ev.id}
+                          to={`/stories/${ev.slug}`}
+                          className="group bg-white p-5 rounded-[4px] border border-[#e4e7ea] flex flex-col justify-between hover:border-[#3762AB] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#3762AB]"
+                        >
+                          <div>
+                            <div className="text-xs font-bold text-[#121D2F] mb-2.5">
+                              {STORY_TYPE_LABELS[ev.type]}
                             </div>
-
-                            <div className="pt-3 border-t border-[#e4e7ea] flex items-center justify-between gap-2 text-xs">
-                              <span className="text-[#6c7d8f] font-medium">
-                                {ev.date || `Sprint ${ev.sprint}`}
-                              </span>
-
-                              {isAvailable ? (
-                                <a
-                                  href={ev.linkUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 font-bold text-[#3762AB] hover:text-[#2b4d87]"
-                                >
-                                  <span>{ev.linkLabel || 'Openen'}</span>
-                                  <ExternalLink className="w-3.5 h-3.5" />
-                                </a>
-                              ) : (
-                                <span className="text-[#6c7d8f] italic">
-                                  {ev.linkLabel || 'Volgt binnenkort'}
-                                </span>
-                              )}
-                            </div>
+                            <h4 className="text-[16px] font-bold text-[#121D2F] mb-1.5 leading-snug group-hover:text-[#3762AB]">
+                              {ev.titel}
+                            </h4>
+                            <p className="text-[13px] text-[#4a5b6b] leading-relaxed mb-4">{ev.korte_versie}</p>
                           </div>
-                        );
-                      })}
+                          <div className="pt-3 border-t border-[#e4e7ea] flex items-center justify-between gap-2 text-xs">
+                            <span className="text-[#6c7d8f] font-medium">Sprint {ev.sprint}</span>
+                            <span className="inline-flex items-center gap-1 font-bold text-[#3762AB]">
+                              <span>Bekijk story</span>
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            </span>
+                          </div>
+                        </Link>
+                      ))}
                     </div>
                   )}
                 </div>

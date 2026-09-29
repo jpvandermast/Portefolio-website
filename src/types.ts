@@ -1,25 +1,5 @@
 export type LearningOutcomeId = 'LU1' | 'LU2' | 'LU3' | 'LU4' | 'LU5';
 
-export type StoryType = 'Research Story' | 'User Story' | 'Learning Story';
-
-export type EvidenceFormat = 'Document' | 'Video' | 'Prototype' | 'GitHub' | 'Presentatie' | 'Binnenkort';
-
-export type EvidenceStatus = 'Afgerond' | 'In uitvoering' | 'Binnenkort';
-
-export interface EvidenceItem {
-  id: string;
-  luId: LearningOutcomeId;
-  title: string;
-  description: string;
-  storyType: StoryType;
-  format: EvidenceFormat;
-  status: EvidenceStatus;
-  sprint?: number;
-  linkUrl?: string;
-  linkLabel?: string;
-  date?: string;
-}
-
 export interface LearningOutcome {
   id: LearningOutcomeId;
   code: string;
@@ -60,11 +40,6 @@ export interface SprintData {
   weeks: string;
   theme: string;
   status: 'Afgerond' | 'Huidige sprint' | 'Gepland';
-  stories: {
-    research: string[];
-    userStory: string[];
-    learningStory: string[];
-  };
 }
 
 export interface AboutData {
@@ -92,4 +67,50 @@ export interface AboutData {
     linkedin: string;
     github: string;
   };
+}
+
+// ---- Stories uit Supabase (databasekolommen blijven Nederlands) ----
+
+export type StoryTypeCode = 'US' | 'RS' | 'LS';
+
+export interface StoryOverviewItem {
+  id: string;
+  slug: string;
+  titel: string;
+  type: StoryTypeCode;
+  sprint: number;
+  logboek_rij: number | null;
+  korte_versie: string;
+  klein_pad: string | null;
+  klein_alt: string | null;
+  /** LU-nummers 1-5, uit story_leeruitkomsten */
+  lus: number[];
+}
+
+export interface StoryFile {
+  id: string;
+  story_id: string;
+  rol: 'klein' | 'afbeelding' | 'document';
+  volgorde: number;
+  bestandsnaam: string;
+  storage_path: string;
+  mime: string | null;
+  bytes: number | null;
+  alt_of_weergavenaam: string;
+}
+
+export interface Story {
+  id: string;
+  slug: string;
+  titel: string;
+  type: StoryTypeCode;
+  sprint: number;
+  logboek_rij: number | null;
+  korte_versie: string;
+  opdracht_md: string;
+  gedaan_md: string;
+  resultaat_md: string;
+  geleerd_md: string;
+  files: StoryFile[];
+  lus: number[];
 }
