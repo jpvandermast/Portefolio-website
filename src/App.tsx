@@ -8,9 +8,15 @@ import { ProjectsSection } from './components/ProjectsSection';
 import { SprintOverviewSection } from './components/SprintOverviewSection';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
-import { initialEvidenceItems } from './data/portfolioData';
+import { useMatch } from 'react-router';
+import { StoryPanel } from './components/StoryPanel';
+import { ChatWidget } from './components/ChatWidget';
 
 export default function App() {
+  // /stories/:slug toont dezelfde homepage met het story-paneel open
+  const storyMatch = useMatch('/stories/:slug');
+  const slug = storyMatch?.params.slug;
+
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#22303f] font-sans antialiased selection:bg-[#3762AB] selection:text-white">
       {/* Top Navigation */}
@@ -25,7 +31,7 @@ export default function App() {
         <AboutSection />
 
         {/* 3. Leeruitkomsten (LU1 t/m LU5) */}
-        <LearningOutcomesSection evidenceList={initialEvidenceItems} />
+        <LearningOutcomesSection />
 
         {/* 4. Onderzoek */}
         <ResearchSection />
@@ -42,6 +48,10 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      <ChatWidget />
+
+      {slug && <StoryPanel key={slug} slug={slug} />}
     </div>
   );
 }

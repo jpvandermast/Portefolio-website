@@ -8,8 +8,12 @@ import {
   ExternalLink 
 } from 'lucide-react';
 import { researchTopic } from '../data/portfolioData';
+import { useProjecten } from '../lib/ProjectenContext';
 
 export const ResearchSection: React.FC = () => {
+  const { status, projecten, reload } = useProjecten();
+  const onderzoeken = projecten.filter((p) => p.type === 'onderzoek');
+
   return (
     <section id="onderzoek" className="py-24 px-6 bg-[#f6f7f8] border-b border-[#e4e7ea]">
       <div className="max-w-[1120px] mx-auto">
@@ -28,6 +32,69 @@ export const ResearchSection: React.FC = () => {
           </p>
         </div>
 
+        {status === 'error' && (
+          <div role="alert" className="mb-8 p-4 rounded-[4px] bg-white border border-[#e4e7ea] text-[14px] text-[#4a5b6b] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <span>De onderzoeken konden niet worden geladen.</span>
+            <button type="button" onClick={reload} className="bg-[#121D2F] hover:bg-[#2b4d87] text-white py-2 px-4 rounded-[4px] font-bold text-xs self-start">
+              Opnieuw proberen
+            </button>
+          </div>
+        )}
+
+        {/* Onderzoeken uit Supabase (tabel projecten, type 'onderzoek') */}
+        {onderzoeken.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {onderzoeken.map((onderzoek) => (
+              <div
+                key={onderzoek.id}
+                className="bg-white rounded-[6px] border border-[#e4e7ea] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all overflow-hidden flex flex-col"
+              >
+                <div className="bg-[#121D2F] text-white p-6 lg:p-8">
+                  {onderzoek.sprint != null && (
+                    <span className="text-xs text-[#9cbce8] font-bold uppercase tracking-[0.06em] block mb-3">
+                      Sprint {onderzoek.sprint}
+                    </span>
+                  )}
+                  <h3 className="text-[22px] font-bold text-white leading-tight">{onderzoek.titel}</h3>
+                </div>
+                <div className="p-6 lg:p-8 flex-1 flex flex-col justify-between gap-6">
+                  <div>
+                    {onderzoek.beschrijving && (
+                      <p className="text-[14px] text-[#4a5b6b] leading-relaxed mb-4">{onderzoek.beschrijving}</p>
+                    )}
+                    {onderzoek.tools.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5">
+                        {onderzoek.tools.map((tool) => (
+                          <span
+                            key={tool}
+                            className="px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-[#f6f7f8] text-[#22303f] border border-[#e4e7ea]"
+                          >
+                            {tool}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {onderzoek.link_url && (
+                    <a
+                      href={onderzoek.link_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 bg-[#3762AB] hover:bg-[#2b4d87] text-white py-3 px-6 rounded-[4px] font-bold text-[15px] transition-colors self-start"
+                    >
+                      <span>{onderzoek.link_label || 'Bekijk onderzoek'}</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Huidige 'binnenkort'-staat zolang er geen onderzoeken in de tabel staan */}
+        {onderzoeken.length === 0 && (
+        <>
         {/* Prominent Research Card */}
         <div className="bg-white rounded-[6px] border border-[#e4e7ea] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] transition-all overflow-hidden">
           
@@ -114,6 +181,9 @@ export const ResearchSection: React.FC = () => {
           </div>
 
         </div>
+
+        </>
+        )}
 
       </div>
     </section>

@@ -1,10 +1,28 @@
 import React, { useState } from 'react';
 import { Search, Code2, Brain, ChevronLeft, ChevronRight } from 'lucide-react';
 import { sprintTimeline } from '../data/portfolioData';
+import { useStories } from '../lib/StoriesContext';
+import { StoryCard } from './StoryCard';
+import type { StoryTypeCode } from '../types';
 
 export const SprintOverviewSection: React.FC = () => {
   const [activeSprintIndex, setActiveSprintIndex] = useState<number>(0);
   const selectedSprint = sprintTimeline[activeSprintIndex];
+  const { status, stories, reload } = useStories();
+  const sprintStories = stories.filter((s) => s.sprint === selectedSprint.sprintNumber);
+
+  const columns: {
+    type: StoryTypeCode;
+    label: string;
+    title: string;
+    lus: string;
+    icon: React.ReactNode;
+    emptyText: string;
+  }[] = [
+    { type: 'RS', label: 'Research Story', title: 'Onderzoek naar AI-impact', lus: 'LU1 / LU3', icon: <Search className="w-5 h-5 stroke-[2]" />, emptyText: 'Nog geen Research Story in deze sprint' },
+    { type: 'US', label: 'User Story', title: 'AI-oplossing ontwerpen & bouwen', lus: 'LU2 / LU4', icon: <Code2 className="w-5 h-5 stroke-[2]" />, emptyText: 'Nog geen User Story in deze sprint' },
+    { type: 'LS', label: 'Learning Story', title: 'Nieuwe tools & zelfsturing', lus: 'LU4 / LU5', icon: <Brain className="w-5 h-5 stroke-[2]" />, emptyText: 'Nog geen Learning Story in deze sprint' },
+  ];
 
   return (
     <section id="sprints" className="py-24 px-6 bg-[#f6f7f8] border-b border-[#e4e7ea]">
@@ -117,93 +135,48 @@ export const SprintOverviewSection: React.FC = () => {
               </div>
             </div>
 
-            {/* The Three Story Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              
-              {/* Research Story */}
-              <div className="bg-white p-6 rounded-[6px] border border-[#e4e7ea] flex flex-col justify-between">
-                <div>
-                  <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center mb-4">
-                    <Search className="w-5 h-5 stroke-[2]" />
-                  </div>
-                  <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
-                    Research Story ({selectedSprint.stories.research.length})
-                  </div>
-                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">
-                    Onderzoek naar AI-impact
-                  </h4>
-                  <div className="space-y-3">
-                    {selectedSprint.stories.research.map((story, i) => (
-                      <div key={i} className="text-[13px] text-[#4a5b6b] leading-relaxed flex items-start gap-2">
-                        {selectedSprint.stories.research.length > 1 && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB] mt-2 shrink-0" />
-                        )}
-                        <span>{story}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
-                  Koppeling: LU1 / LU3
-                </div>
+            {/* The Three Story Columns (uit Supabase) */}
+            {status === 'error' && (
+              <div role="alert" className="mb-6 p-4 rounded-[4px] bg-white border border-[#e4e7ea] text-[14px] text-[#4a5b6b] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <span>De stories konden niet worden geladen. Probeer het later opnieuw.</span>
+                <button type="button" onClick={reload} className="bg-[#121D2F] hover:bg-[#2b4d87] text-white py-2 px-4 rounded-[4px] font-bold text-xs self-start">
+                  Opnieuw proberen
+                </button>
               </div>
-
-              {/* User Story */}
-              <div className="bg-white p-6 rounded-[6px] border border-[#e4e7ea] flex flex-col justify-between">
-                <div>
-                  <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center mb-4">
-                    <Code2 className="w-5 h-5 stroke-[2]" />
-                  </div>
-                  <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
-                    User Story ({selectedSprint.stories.userStory.length})
-                  </div>
-                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">
-                    AI-oplossing ontwerpen & bouwen
-                  </h4>
-                  <div className="space-y-3">
-                    {selectedSprint.stories.userStory.map((story, i) => (
-                      <div key={i} className="text-[13px] text-[#4a5b6b] leading-relaxed flex items-start gap-2">
-                        {selectedSprint.stories.userStory.length > 1 && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB] mt-2 shrink-0" />
-                        )}
-                        <span>{story}</span>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6" aria-busy={status === 'loading'}>
+              {columns.map((col) => {
+                const items = sprintStories.filter((s) => s.type === col.type);
+                const emptyText = sprintStories.length === 0 ? 'Komt binnenkort' : col.emptyText;
+                return (
+                  <div key={col.type} className="bg-white p-6 rounded-[6px] border border-[#e4e7ea] flex flex-col justify-between">
+                    <div>
+                      <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center mb-4">
+                        {col.icon}
                       </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
-                  Koppeling: LU2 / LU4
-                </div>
-              </div>
-
-              {/* Learning Story */}
-              <div className="bg-white p-6 rounded-[6px] border border-[#e4e7ea] flex flex-col justify-between">
-                <div>
-                  <div className="w-10 h-10 rounded-full bg-[#121D2F] text-white flex items-center justify-center mb-4">
-                    <Brain className="w-5 h-5 stroke-[2]" />
-                  </div>
-                  <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
-                    Learning Story ({selectedSprint.stories.learningStory.length})
-                  </div>
-                  <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">
-                    Nieuwe tools & zelfsturing
-                  </h4>
-                  <div className="space-y-3">
-                    {selectedSprint.stories.learningStory.map((story, i) => (
-                      <div key={i} className="text-[13px] text-[#4a5b6b] leading-relaxed flex items-start gap-2">
-                        {selectedSprint.stories.learningStory.length > 1 && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#3762AB] mt-2 shrink-0" />
-                        )}
-                        <span>{story}</span>
+                      <div className="text-[12px] font-bold uppercase tracking-[0.06em] text-[#3762AB] mb-1">
+                        {col.label} ({status === 'ready' ? items.length : '–'})
                       </div>
-                    ))}
+                      <h4 className="text-[16px] font-bold text-[#121D2F] mb-3">{col.title}</h4>
+                      <div className="space-y-4">
+                        {status === 'loading' ? (
+                          <div className="animate-pulse space-y-2" role="status" aria-label="Stories laden">
+                            <div className="aspect-[16/9] bg-[#e4e7ea] rounded-[4px]" />
+                            <div className="h-3 bg-[#e4e7ea] rounded w-3/4" />
+                          </div>
+                        ) : items.length > 0 ? (
+                          items.map((story) => <StoryCard key={story.id} story={story} />)
+                        ) : (
+                          <p className="text-[13px] text-[#6c7d8f] italic">{status === 'error' ? 'Niet beschikbaar' : emptyText}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
+                      Koppeling: {col.lus}
+                    </div>
                   </div>
-                </div>
-                <div className="pt-4 mt-4 border-t border-[#e4e7ea] text-[11px] font-bold uppercase tracking-[0.06em] text-[#121D2F]">
-                  Koppeling: LU4 / LU5
-                </div>
-              </div>
-
+                );
+              })}
             </div>
 
           </div>
