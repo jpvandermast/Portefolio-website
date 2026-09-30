@@ -10,6 +10,7 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { useMatch } from 'react-router';
 import { StoryPanel } from './components/StoryPanel';
+import { ChatWidget } from './components/ChatWidget';
 
 export default function App() {
   // /stories/:slug toont dezelfde homepage met het story-paneel open
@@ -47,6 +48,8 @@ export default function App() {
 
       {/* Footer */}
       <Footer />
+
+      <ChatWidget />
 
       {slug && <StoryPanel key={slug} slug={slug} />}
     </div>
