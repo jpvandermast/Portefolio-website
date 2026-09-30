@@ -193,7 +193,7 @@ export const StoryPanel: React.FC<{ slug: string }> = ({ slug }) => {
                 {documents.map((file) => (
                   <a
                     key={file.id}
-                    href={publicUrl(file.storage_path, file.bestandsnaam)}
+                    href={publicUrl(file.storage_path, file.bestandsnaam.split('/').pop())}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#3762AB] hover:bg-[#2b4d87] text-white py-3 px-5 rounded-[4px] font-bold text-[14px] transition-colors"
