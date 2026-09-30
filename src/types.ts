@@ -22,19 +22,6 @@ export interface ResearchStory {
   isAvailable: boolean;
 }
 
-export interface ProjectPOC {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  status: 'In ontwikkeling' | 'Concept' | 'Gereed';
-  sprint: number;
-  tools: string[];
-  relatedLUs: LearningOutcomeId[];
-  liveUrl?: string;
-  codeUrl?: string;
-}
-
 export interface SprintData {
   sprintNumber: number;
   weeks: string;
@@ -113,4 +100,18 @@ export interface Story {
   geleerd_md: string;
   files: StoryFile[];
   lus: number[];
+}
+
+// ---- Projecten uit Supabase (tabel projecten, door Josse gevuld via de Table Editor) ----
+
+export interface Project {
+  id: string;
+  titel: string;
+  beschrijving: string;
+  type: 'project' | 'onderzoek';
+  link_url: string | null;
+  link_label: string | null;
+  tools: string[];
+  sprint: number | null;
+  volgorde: number;
 }

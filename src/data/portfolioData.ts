@@ -1,7 +1,6 @@
 import {
   AboutData,
   LearningOutcome,
-  ProjectPOC,
   ResearchStory,
   SprintData,
 } from '../types';
@@ -148,45 +147,6 @@ export const researchTopic: ResearchStory = {
   linkLabel: 'Onderzoeksverslag volgt binnenkort (knop wordt actief na publicatie)',
   isAvailable: false,
 };
-
-export const initialProjects: ProjectPOC[] = [
-  {
-    id: 'poc-1',
-    title: 'Project 1 — in ontwikkeling',
-    subtitle: 'POC 1',
-    description: 'Dit project wordt binnenkort toegevoegd.',
-    status: 'In ontwikkeling',
-    sprint: 1,
-    tools: [],
-    relatedLUs: [],
-    liveUrl: '',
-    codeUrl: '',
-  },
-  {
-    id: 'poc-2',
-    title: 'Project 2 — in ontwikkeling',
-    subtitle: 'POC 2',
-    description: 'Dit project wordt binnenkort toegevoegd.',
-    status: 'In ontwikkeling',
-    sprint: 2,
-    tools: [],
-    relatedLUs: [],
-    liveUrl: '',
-    codeUrl: '',
-  },
-  {
-    id: 'poc-3',
-    title: 'Project 3 — in ontwikkeling',
-    subtitle: 'POC 3',
-    description: 'Dit project wordt binnenkort toegevoegd.',
-    status: 'In ontwikkeling',
-    sprint: 3,
-    tools: [],
-    relatedLUs: [],
-    liveUrl: '',
-    codeUrl: '',
-  },
-];
 
 export const sprintTimeline: SprintData[] = [
   {
