@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI, ThinkingLevel } from '@google/genai';
 import {
   MAX_HISTORY_MESSAGES,
   MAX_MESSAGE_LENGTH,
@@ -38,7 +38,7 @@ async function handleGet(request: Request) {
 }
 
 async function handlePost(request: Request) {
-  let body: { sessionId?: unknown; message?: unknown };
+  let body: { sessionId?: unknown; message?: unknown; stream?: unknown };
   try {
     body = await request.json();
   } catch {
@@ -53,6 +53,7 @@ async function handlePost(request: Request) {
   if (message.length > MAX_MESSAGE_LENGTH) {
     return fail(400, 'message_too_long', `Je bericht is te lang (maximaal ${MAX_MESSAGE_LENGTH} tekens).`);
   }
+  const wantsStream = body.stream === true;
 
   const apiKey = process.env.GEMINI_API_KEY;
   const model = process.env.GEMINI_MODEL;
@@ -100,7 +101,7 @@ async function handlePost(request: Request) {
 
   const context = await getPortfolioContext();
   const ai = new GoogleGenAI({ apiKey });
-  const response = await ai.models.generateContent({
+  const params = {
     model,
     contents: [
       ...history.map((m) => ({
@@ -113,21 +114,74 @@ async function handlePost(request: Request) {
       systemInstruction: buildSystemPrompt(context),
       maxOutputTokens: MAX_OUTPUT_TOKENS,
       temperature: 0.4,
+      // Minimaal "denken": anders gaat het tokenbudget op aan thinking en wordt het antwoord afgekapt.
+      thinkingConfig: { thinkingLevel: ThinkingLevel.MINIMAL },
     },
-  });
-  const reply = response.text?.trim();
-  if (!reply) throw new Error('Gemini gaf geen antwoord');
+  };
 
   // Vraag en antwoord samen opslaan (met expliciete tijdstippen voor de volgorde)
-  const now = Date.now();
-  const { error: insertError } = await db.from('chat_berichten').insert([
-    { sessie_id: sessionId, rol: 'gebruiker', inhoud: message, created_at: new Date(now).toISOString() },
-    { sessie_id: sessionId, rol: 'assistent', inhoud: reply, created_at: new Date(now + 1).toISOString() },
-  ]);
-  if (insertError) throw insertError;
-  await db.from('chat_sessies').update({ laatst_actief: new Date().toISOString() }).eq('id', sessionId);
+  const save = async (reply: string) => {
+    const now = Date.now();
+    const { error: insertError } = await db.from('chat_berichten').insert([
+      { sessie_id: sessionId, rol: 'gebruiker', inhoud: message, created_at: new Date(now).toISOString() },
+      { sessie_id: sessionId, rol: 'assistent', inhoud: reply, created_at: new Date(now + 1).toISOString() },
+    ]);
+    if (insertError) throw insertError;
+    await db.from('chat_sessies').update({ laatst_actief: new Date().toISOString() }).eq('id', sessionId);
+  };
 
-  return json({ reply });
+  if (!wantsStream) {
+    const response = await ai.models.generateContent(params);
+    const reply = response.text?.trim();
+    if (!reply) throw new Error('Gemini gaf geen antwoord');
+    await save(reply);
+    return json({ reply });
+  }
+
+  // Streaming: tekst gaat stukje voor stukje naar de browser; het volledige antwoord wordt daarna opgeslagen.
+  // Fouten vóór het eerste stukje worden een gewone JSON-fout (zie de catch in fetch()).
+  const stream = await ai.models.generateContentStream(params);
+  const iterator = stream[Symbol.asyncIterator]();
+  const first = await iterator.next();
+  const encoder = new TextEncoder();
+  let full = '';
+  let cancelled = false;
+
+  const output = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      try {
+        let result = first;
+        while (!result.done && !cancelled) {
+          const text = result.value.text;
+          if (text) {
+            full += text;
+            controller.enqueue(encoder.encode(text));
+          }
+          result = await iterator.next();
+        }
+        const reply = full.trim();
+        if (!reply) throw new Error('Gemini gaf geen antwoord');
+        // Ook een afgebroken antwoord (stopknop) wordt bewaard, zodat de geschiedenis klopt met wat de bezoeker zag.
+        await save(reply);
+        if (!cancelled) controller.close();
+      } catch (err) {
+        console.error('chat-streamfout:', err instanceof Error ? err.message : 'onbekend');
+        if (!cancelled) controller.error(err);
+      }
+    },
+    cancel() {
+      cancelled = true;
+    },
+  });
+
+  return new Response(output, {
+    status: 200,
+    headers: {
+      'Content-Type': 'text/plain; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'X-Content-Type-Options': 'nosniff',
+    },
+  });
 }
 
 export default {

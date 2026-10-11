@@ -1,65 +1,198 @@
 @import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+/* ------------------------------------------------------------------
+   Designsysteem (advies §6). Kleuren, afrondingen, schaduwen en
+   lettergroottes staan hier als tokens; componenten gebruiken alleen
+   deze tokens (bijv. bg-surface, text-muted, rounded-card, bg-lu-3).
+   ------------------------------------------------------------------ */
+@theme {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Basis */
+  --color-night: #070c17;        /* donkerste achtergrond (hero, footer) */
+  --color-navy: #0b1220;
+  --color-navy-800: #121d2f;
+  --color-navy-700: #1b2a42;
+  --color-surface: #f8f8f6;      /* licht gebroken wit, paginabasis */
+  --color-card: #ffffff;
+  --color-sunken: #f0f1ee;       /* subtiele vlakken */
+  --color-line: #e3e5e8;
+  --color-line-strong: #cdd2d9;
+  --color-ink: #121a2b;          /* hoofdtekst */
+  --color-muted: #536074;        /* secundaire tekst, 5.9:1 op surface */
+  --color-subtle: #5d697c;       /* labels, >= 4.5:1 op wit, surface en sunken */
+
+  /* Accent */
+  --color-accent: #3762ab;
+  --color-accent-hover: #2b4f8c;
+  --color-accent-soft: #e9effa;
+  --color-accent-bright: #8fb1ff; /* accent op donkere achtergrond */
+
+  /* AI-highlight: alleen hero, chat en focusmomenten */
+  --color-ai-cyan: #5ee7f5;
+  --color-ai-violet: #a78bfa;
+
+  /* Vaste kleur per leeruitkomst: vol (punten, balken), inkt (tekst op tint), tint (chip-achtergrond) */
+  --color-lu-1: #3b82f6;
+  --color-lu-1-ink: #1d4ed8;
+  --color-lu-1-soft: #e8f0fe;
+  --color-lu-2: #8b5cf6;
+  --color-lu-2-ink: #6d28d9;
+  --color-lu-2-soft: #f1ebfe;
+  --color-lu-3: #f59e0b;
+  --color-lu-3-ink: #92400e;
+  --color-lu-3-soft: #fdf3e1;
+  --color-lu-4: #10b981;
+  --color-lu-4-ink: #047857;
+  --color-lu-4-soft: #e3f6ee;
+  --color-lu-5: #f43f5e;
+  --color-lu-5-ink: #be123c;
+  --color-lu-5-soft: #fde9ed;
+
+  --color-danger: #b42318;
+  --color-danger-soft: #fdecea;
+  --color-success: #067647;
+
+  /* Vorm */
+  --radius-chip: 999px;
+  --radius-control: 10px;
+  --radius-card: 16px;
+  --radius-panel: 20px;
+
+  --shadow-card: 0 1px 2px rgb(16 24 40 / 0.04), 0 1px 3px rgb(16 24 40 / 0.05);
+  --shadow-lift: 0 2px 4px rgb(16 24 40 / 0.04), 0 16px 32px -12px rgb(16 24 40 / 0.16);
+  --shadow-panel: 0 4px 12px rgb(7 12 23 / 0.08), 0 24px 64px -12px rgb(7 12 23 / 0.35);
+  --shadow-glow: 0 0 0 1px rgb(143 177 255 / 0.3), 0 10px 36px -6px rgb(94 231 245 / 0.4);
+
+  /* Fluid typografie */
+  --text-display: clamp(2.5rem, 1.45rem + 4.4vw, 4.6rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.04em;
+  --text-h1: clamp(2.1rem, 1.55rem + 2.2vw, 3.2rem);
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.032em;
+  --text-h2: clamp(1.55rem, 1.3rem + 1vw, 2.15rem);
+  --text-h2--line-height: 1.15;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h3: clamp(1.1rem, 1.04rem + 0.25vw, 1.25rem);
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.012em;
+  --text-lead: clamp(1.05rem, 0.98rem + 0.3vw, 1.2rem);
+  --text-lead--line-height: 1.6;
+
+  --container-page: 1200px;
+  --container-prose: 68ch;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-mesh: mesh 24s ease-in-out infinite alternate;
+  --animate-mesh-slow: mesh 32s ease-in-out infinite alternate-reverse;
+  --animate-pulse-soft: pulse-soft 1.4s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-blink: blink 1s steps(2, start) infinite;
+
+  @keyframes mesh {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(6%, -5%, 0) scale(1.08); }
+    100% { transform: translate3d(-5%, 6%, 0) scale(0.95); }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.3; transform: scale(0.8); }
+    50% { opacity: 1; transform: scale(1); }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+  @keyframes blink {
+    to { visibility: hidden; }
+  }
+}
 
 @layer base {
-  :root {
-    --navy: #121D2F;
-    --navy-dark: #0c1420;
-    --white: #ffffff;
-    --off-white: #f6f7f8;
-    --ink: #22303f;
-    --accent: #3762AB;
-    --accent-dark: #2b4d87;
-    --border: #e4e7ea;
-  }
-
   html {
-    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
-    background-color: var(--white);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    @apply bg-surface text-ink font-sans antialiased;
     line-height: 1.6;
-    -webkit-text-size-adjust: 100%;
   }
 
   h1, h2, h3, h4 {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    color: var(--navy);
-    font-weight: 700;
+    @apply font-semibold text-balance;
   }
 
-  h1 {
-    font-size: 48px;
-    line-height: 1.15;
+  p {
+    text-wrap: pretty;
   }
 
-  h2 {
-    font-size: 34px;
-    line-height: 1.25;
+  ::selection {
+    background: var(--color-accent);
+    color: white;
   }
 
-  h3 {
-    font-size: 20px;
-    line-height: 1.35;
+  /* Eén zichtbare focusstijl voor de hele site */
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-ai-cyan);
   }
 }
 
-/* Custom scrollbar matching navy palette */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #f6f7f8;
-}
-::-webkit-scrollbar-thumb {
-  background: #cbd2d9;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #121D2F;
+@layer components {
+  /* Fijn raster voor donkere vlakken; vervaagt naar de randen */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 75% 70% at 50% 35%, black 25%, transparent 80%);
+  }
+
+  .text-gradient-ai {
+    background: linear-gradient(100deg, var(--color-ai-cyan), var(--color-accent-bright) 45%, var(--color-ai-violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, var(--color-sunken) 0%, #e6e8e4 40%, var(--color-sunken) 80%);
+    background-size: 200% 100%;
+    @apply animate-shimmer;
+  }
+
+  /* Command palette (cmdk) */
+  [cmdk-group-heading] {
+    @apply px-3 pt-3 pb-1.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-subtle;
+  }
+  [cmdk-group][hidden] {
+    display: none;
+  }
+  [cmdk-loading] {
+    @apply px-3 py-2 text-[0.875rem] text-subtle;
+  }
+
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

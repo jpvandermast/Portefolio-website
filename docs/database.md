@@ -25,6 +25,24 @@ Nieuwe tabellen staan in `supabase/migrations/`. De story-tabellen komen uit de 
 
 - `20260930120000_projecten_en_chat.sql`: `projecten`, `chat_sessies`, `chat_berichten`.
 
-## Projecten toevoegen
+## Onderzoek en AI-oplossingen toevoegen
 
-Supabase → Table Editor → `projecten` → Insert row. Vul minimaal `titel` en `type` in. `link_url` en `link_label` geven een knop naar een externe link. `tools` is een lijst (bijv. `{Claude,Supabase}`). Zet `zichtbaar` op uit om een rij te verbergen. Lage `volgorde` komt eerst. Wijzigingen zijn direct zichtbaar, zonder deploy.
+De tabel `projecten` vult twee vaste pagina's:
+
+| `type` | Verschijnt op | Weergave |
+|---|---|---|
+| `onderzoek` | `/onderzoek` en het blok "Wat ik onderzoek en bouw" op de homepage | Grote kaart met titel links en de beschrijving rechts |
+| `project` | `/ai-oplossingen` en hetzelfde homepage-blok | Kaart in een grid |
+
+Zolang er geen rij van een type is, toont de pagina een rustige "Volgt binnenkort"-kaart. De pagina's staan altijd in het menu.
+
+Supabase → Table Editor → `projecten` → Insert row:
+
+- `titel` (verplicht) en `type` (`onderzoek` of `project`).
+- `beschrijving`: mag **markdown** zijn (alinea's met een lege regel ertussen, `- ` voor lijstjes, `**vet**`, `[tekst](https://...)` voor links). Geen HTML.
+- `link_url` + `link_label`: de knop, bijv. naar het volledige onderzoeksverslag (pdf op OneDrive of een andere publieke link) of naar de werkende oplossing. Zonder `link_label` staat er "Bekijk het onderzoek" of "Bekijken".
+- `tools`: lijst, bijv. `{Claude,Perplexity,Gemini}`.
+- `sprint`: optioneel sprintnummer.
+- `volgorde`: lager = eerder. `zichtbaar` uit = verborgen.
+
+Wijzigingen zijn direct zichtbaar, zonder deploy. De chatbot kent de rijen ook (na maximaal 5 minuten).

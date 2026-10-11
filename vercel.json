@@ -1,3 +1,5 @@
 {
-  "rewrites": [{ "source": "/stories/:path*", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/((?!api/|assets/|@|src/|node_modules/)(?!.*\\.[a-zA-Z0-9]+$).*)", "destination": "/index.html" }
+  ]
 }
