@@ -1,57 +1,33 @@
-import React from 'react';
-import { Navbar } from './components/Navbar';
-import { HeroSection } from './components/HeroSection';
-import { AboutSection } from './components/AboutSection';
-import { LearningOutcomesSection } from './components/LearningOutcomesSection';
-import { ResearchSection } from './components/ResearchSection';
-import { ProjectsSection } from './components/ProjectsSection';
-import { SprintOverviewSection } from './components/SprintOverviewSection';
-import { ContactSection } from './components/ContactSection';
-import { Footer } from './components/Footer';
-import { useMatch } from 'react-router';
-import { StoryPanel } from './components/StoryPanel';
-import { ChatWidget } from './components/ChatWidget';
+import React, { lazy } from 'react';
+import { Route, Routes } from 'react-router';
+import { Layout } from './components/layout/Layout';
+
+// Elke pagina is een eigen chunk (code-splitting)
+const HomePage = lazy(() => import('./pages/HomePage'));
+const StoriesPage = lazy(() => import('./pages/StoriesPage'));
+const StoryPage = lazy(() => import('./pages/StoryPage'));
+const LearningOutcomesPage = lazy(() => import('./pages/LearningOutcomesPage'));
+const LearningOutcomePage = lazy(() => import('./pages/LearningOutcomePage'));
+const SprintsPage = lazy(() => import('./pages/SprintsPage'));
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export default function App() {
-  // /stories/:slug toont dezelfde homepage met het story-paneel open
-  const storyMatch = useMatch('/stories/:slug');
-  const slug = storyMatch?.params.slug;
-
   return (
-    <div className="min-h-screen flex flex-col bg-white text-[#22303f] font-sans antialiased selection:bg-[#3762AB] selection:text-white">
-      {/* Top Navigation */}
-      <Navbar />
-
-      {/* Main Content Sections in requested sequence */}
-      <main className="flex-1">
-        {/* 1. Hero / Intro */}
-        <HeroSection />
-
-        {/* 2. Over mij (Talenten, Passies, Dromen & Visie) */}
-        <AboutSection />
-
-        {/* 3. Leeruitkomsten (LU1 t/m LU5) */}
-        <LearningOutcomesSection />
-
-        {/* 4. Onderzoek */}
-        <ResearchSection />
-
-        {/* 5. Projecten / Gebouwde oplossingen */}
-        <ProjectsSection />
-
-        {/* 6. Sprint-overzicht (Tijdlijn) */}
-        <SprintOverviewSection />
-
-        {/* 7. Contact (Vereenvoudigd met directe knoppen) */}
-        <ContactSection />
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      <ChatWidget />
-
-      {slug && <StoryPanel key={slug} slug={slug} />}
-    </div>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="stories" element={<StoriesPage />} />
+        {/* Deze URL staat in ingeleverde opdrachten: nooit wijzigen */}
+        <Route path="stories/:slug" element={<StoryPage />} />
+        <Route path="leeruitkomsten" element={<LearningOutcomesPage />} />
+        <Route path="leeruitkomsten/:lu" element={<LearningOutcomePage />} />
+        <Route path="sprints" element={<SprintsPage />} />
+        <Route path="over-mij" element={<AboutPage />} />
+        <Route path="projecten" element={<ProjectsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }

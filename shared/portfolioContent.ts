@@ -60,70 +60,63 @@ export const aboutData: AboutData = {
   },
 };
 
+/**
+ * Officiële leeruitkomsten uit de Canvas-rubriek (Sprint 1) en het minimaal aantal keer "voldoende"
+ * uit de minorgids (v2.0, p. 7). Niet zelf herformuleren: coaches herkennen deze teksten.
+ * Ook gebruikt door de chatbot (api/_lib/context.ts: code, title, shortDescription).
+ */
 export const learningOutcomes: LearningOutcome[] = [
   {
     id: 'LU1',
+    nummer: 1,
     code: 'LU1',
-    title: 'AI-impact op de toekomstige beroepspraktijk analyseren en evalueren',
-    shortDescription: 'Onderzoek naar hoe AI het commerciële vakgebied verandert, inclusief kansen, risico’s en veranderende competenties.',
-    detailedDescription: 'De student analyseert grondig welke strategische, technologische en operationele consequenties opkomende AI-innovaties hebben voor de toekomstige beroepspraktijk (Commerciële Economie, sales, marketing en klantrelatiebeheer). Dit omvat marktonderzoek, trendanalyse en strategische aanbevelingen.',
-    assessmentCriteria: [
-      'Gronde analyse van AI-trends binnen commercieel werkveld',
-      'Kwantitatieve en kwalitatieve onderbouwing met vakliteratuur en experts',
-      'Concrete impact op taken, workflows en vereiste competenties'
-    ],
-    colorBadge: 'bg-[#121D2F] text-white',
+    title: 'Impact AI op beroep',
+    label: 'Impact',
+    shortDescription:
+      'Je kunt zelfstandig onderzoek doen naar de impact van AI in jouw toekomstig beroep en vaststellen welke nieuwe AI- en digitale vaardigheden daarvoor nodig zijn.',
+    minimumVoldoende: 2,
   },
   {
     id: 'LU2',
+    nummer: 2,
     code: 'LU2',
-    title: 'Praktijkgerichte AI-oplossing ontwerpen, realiseren en presenteren',
-    shortDescription: 'Van probleemdefinitie en user research naar een werkend AI-prototype (proof-of-concept) en overtuigende demonstratie.',
-    detailedDescription: 'De student ontwerpt en bouwt zelfstandig of in teamverband een tastbare AI-oplossing (bijv. een slimme agent, predictive tool of workflow automation). De oplossing lost een reëel praktijkprobleem op en wordt gedemonstreerd aan belanghebbenden.',
-    assessmentCriteria: [
-      'Duidelijke probleemanalyse en doelgroepbepaling (User Stories)',
-      'Functioneel ontworpen en getest AI-prototype / proof-of-concept',
-      'Heldere en professionele presentatie/pitch van de werking en meerwaarde'
-    ],
-    colorBadge: 'bg-[#1a2d47] text-white',
+    title: 'Praktijkoplossing AI',
+    label: 'Oplossing',
+    shortDescription:
+      'Je kunt zelfstandig een AI-oplossing ontwerpen, realiseren en presenteren die een specifieke beroepspraktijk radicaal transformeert (verandert).',
+    minimumVoldoende: 4,
   },
   {
     id: 'LU3',
+    nummer: 3,
     code: 'LU3',
-    title: 'Ethiek en verantwoord AI-gebruik beoordelen',
-    shortDescription: 'Kritische reflectie op privacy, bias, wetgeving (zoals de EU AI Act), transparantie en menselijke controle.',
-    detailedDescription: 'De student toetst AI-toepassingen aan ethische principes, maatschappelijke waarden en wettelijke kaders. Denk aan data-integriteit, algoritmische vooringenomenheid, privacy (AVG/GDPR), aansprakelijkheid en de balans tussen automatisering en menselijk toezicht.',
-    assessmentCriteria: [
-      'Toepassing van een ethisch framework (bijv. EU AI Act of Ethical AI Canvas)',
-      'Identificatie van bias, hallucinaties en privacyrisico’s',
-      'Gefundeerde afweging tussen efficiëntie en menselijke autonomie'
-    ],
-    colorBadge: 'bg-[#253e63] text-white',
+    title: 'Ethisch en verantwoord',
+    label: 'Ethiek',
+    shortDescription:
+      'Je kunt zelfstandig de ethische vraagstukken en uitdagingen van AI in je vakgebied identificeren en aanbevelingen formuleren voor verantwoord AI-gebruik, rekening houdend met privacy, bias en transparantie.',
+    minimumVoldoende: 2,
   },
   {
     id: 'LU4',
+    nummer: 4,
     code: 'LU4',
-    title: 'AI-tools en technieken gebruiken',
-    shortDescription: 'Actieve beheersing van moderne AI-instrumenten: van geavanceerd prompten en RAG tot API-integraties en automation tools.',
-    detailedDescription: 'De student demonstreert praktische vaardigheid in het selecteren, configureren en combineren van moderne AI-technologieën (zoals LLM’s, multimodale modellen, API’s, workflow automations en data-tools) om workflows efficiënter te maken.',
-    assessmentCriteria: [
-      'Effectief gebruik van moderne AI-modellen, API’s en prompts',
-      'Evaluatie van de prestaties, kosten en beperkingen van verschillende tools',
-      'Documentatie van prompts, architectuur en technische keuzes'
-    ],
-    colorBadge: 'bg-[#2f5082] text-white',
+    title: 'AI-tools en technieken',
+    label: 'Tools',
+    shortDescription:
+      'Je kunt zelfstandig verschillende AI-tools en platforms toepassen (zoals machine-learningtechnieken, chatbots, agents, prompts, etc.) en deze gebruiken om specifieke taken binnen je vakgebied op te lossen.',
+    minimumVoldoende: 4,
   },
   {
     id: 'LU5',
+    nummer: 5,
     code: 'LU5',
-    title: 'Zelfstandig en zelfsturend werken',
-    shortDescription: 'Scrum/Agile-werkwijze, iteratieve sprintplanningen, feedback verwerken en systematische zelfreflectie over de 20 weken.',
-    detailedDescription: 'De student plant en stuurt het eigen leer- en ontwikkelproces volgens de Scrum/Agile-methodiek. Dit blijkt uit heldere sprintdoelen (Research, User en Learning Stories), regelmatige reflecties, actieve feedbackophaling en zelfsturing gedurende de 20 weken.',
-    assessmentCriteria: [
-      'Consistente sprintplanningen en sprint reviews (2-wekelijkse cadans)',
-      'Actief ophalen, documenteren en toepassen van peer- en docentfeedback',
-      'Diepgaande reflecties op de eigen professionele groei als AI-professional'
-    ],
-    colorBadge: 'bg-[#3762AB] text-white',
+    title: 'Zelfstandig en zelfsturend',
+    label: 'Zelfsturing',
+    shortDescription:
+      'Je kunt een eigen leerroute vaststellen en uitvoeren waarbij je zelfstandig je leervragen stelt, relevante bronnen en tools selecteert, je eigen voortgang monitort en kritisch reflecteert op je leerproces en persoonlijke ontwikkeling in het AI-landschap.',
+    minimumVoldoende: 6,
   },
 ];
+
+/** Minorgids: minimaal 24 voldoende beoordeelde leeruitkomsten over 8 sprints, minimaal 3 LU's per sprint. */
+export const MINIMUM_TOTAAL_VOLDOENDE = 24;

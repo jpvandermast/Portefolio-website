@@ -1,32 +1,19 @@
 export type LearningOutcomeId = 'LU1' | 'LU2' | 'LU3' | 'LU4' | 'LU5';
 
+/** Leeruitkomst met de officiële tekst uit de Canvas-rubriek en de minimumnorm uit de minorgids. */
 export interface LearningOutcome {
   id: LearningOutcomeId;
+  /** 1-5; zelfde nummer als `lu` in story_leeruitkomsten */
+  nummer: number;
   code: string;
+  /** Officiële korte naam, bijv. "Impact AI op beroep" */
   title: string;
+  /** Eén woord voor chips en grafieken, bijv. "Impact" */
+  label: string;
+  /** Officiële omschrijving (Canvas-rubriek) */
   shortDescription: string;
-  detailedDescription: string;
-  assessmentCriteria: string[];
-  colorBadge: string;
-}
-
-export interface ResearchStory {
-  title: string;
-  field: string;
-  statusText: string;
-  summary: string;
-  researchQuestions: string[];
-  expectedOutput: string;
-  linkUrl?: string;
-  linkLabel: string;
-  isAvailable: boolean;
-}
-
-export interface SprintData {
-  sprintNumber: number;
-  weeks: string;
-  theme: string;
-  status: 'Afgerond' | 'Huidige sprint' | 'Gepland';
+  /** Minimaal aantal keer voldoende beoordeeld (minorgids v2.0, p. 7) */
+  minimumVoldoende: number;
 }
 
 export interface AboutData {

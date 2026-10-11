@@ -10,7 +10,7 @@ import {
   MAX_MESSAGE_LENGTH,
   sendMessage,
   startNewSession,
-} from '../lib/chat';
+} from '../../lib/chat';
 
 const EXAMPLE_QUESTIONS = [
   'Wat heeft Josse in sprint 1 gedaan?',
