@@ -9,13 +9,12 @@ import { useLocation, useNavigationType } from 'react-router';
 export function RouteEffects() {
   const { pathname } = useLocation();
   const navigationType = useNavigationType();
-  const first = useRef(true);
+  // Vorig pad bijhouden: bij de eerste paginalaad (ook de dubbele StrictMode-run) niets doen
+  const previous = useRef(pathname);
 
   useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    if (previous.current === pathname) return;
+    previous.current = pathname;
     if (navigationType !== 'POP') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
     // Wachten tot de (lazy) pagina zijn titel heeft gerenderd
     let tries = 0;

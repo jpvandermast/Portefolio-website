@@ -279,9 +279,9 @@ export default function ChatPanel({ onClosed }: { onClosed: () => void }) {
     }
   };
 
-  const onNavigate = () => {
+  const onNavigate = useCallback(() => {
     if (isMobile() || expanded) close();
-  };
+  }, [expanded, close]);
 
   const empty = historyState === 'done' && messages.length === 0;
   const last = messages[messages.length - 1];

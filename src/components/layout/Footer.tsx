@@ -29,7 +29,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-1">
               {[{ label: 'Home', to: '/' }, ...items].map((item) => (
                 <li key={item.to}>
-                  <Link to={item.to} className="inline-flex min-h-9 items-center text-[0.925rem] text-white/75 hover:text-white transition-colors">
+                  <Link to={item.to} className="inline-flex min-h-11 items-center text-[0.925rem] text-white/75 hover:text-white transition-colors">
                     {item.label}
                   </Link>
                 </li>
@@ -41,20 +41,20 @@ export const Footer: React.FC = () => {
             <h2 className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-white/60 mb-4">Contact</h2>
             <ul className="space-y-1 text-[0.925rem]">
               <li>
-                <a href={`mailto:${aboutData.email}`} className="inline-flex min-h-9 items-center gap-2.5 text-white/75 hover:text-white transition-colors break-all">
+                <a href={`mailto:${aboutData.email}`} className="inline-flex min-h-11 items-center gap-2.5 text-white/75 hover:text-white transition-colors break-all">
                   <Mail className="w-4 h-4 shrink-0" aria-hidden="true" />
                   {aboutData.email}
                 </a>
               </li>
               <li>
-                <a href={aboutData.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center gap-2.5 text-white/75 hover:text-white transition-colors">
+                <a href={aboutData.socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2.5 text-white/75 hover:text-white transition-colors">
                   <Linkedin className="w-4 h-4" aria-hidden="true" />
                   LinkedIn
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" aria-hidden="true" />
                 </a>
               </li>
               <li>
-                <a href={aboutData.socialLinks.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-9 items-center gap-2.5 text-white/75 hover:text-white transition-colors">
+                <a href={aboutData.socialLinks.github} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2.5 text-white/75 hover:text-white transition-colors">
                   <Github className="w-4 h-4" aria-hidden="true" />
                   GitHub
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60" aria-hidden="true" />

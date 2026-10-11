@@ -19,7 +19,7 @@ interface ChipProps {
 /** Basischip; met `to` wordt het een link (met hover-staat). */
 export const Chip: React.FC<ChipProps> = ({ children, className, to, title }) =>
   to ? (
-    <Link to={to} title={title} className={cn(chipBase, 'transition-[filter,box-shadow] hover:brightness-95 hover:shadow-card', className)}>
+    <Link to={to} title={title} className={cn(chipBase, 'relative transition-[filter,box-shadow] hover:brightness-95 hover:shadow-card after:absolute after:inset-x-0 after:-inset-y-2.5', className)}>
       {children}
     </Link>
   ) : (

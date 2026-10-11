@@ -23,7 +23,7 @@
   --color-line-strong: #cdd2d9;
   --color-ink: #121a2b;          /* hoofdtekst */
   --color-muted: #536074;        /* secundaire tekst, 5.9:1 op surface */
-  --color-subtle: #677386;       /* labels, >= 4.5:1 op wit en surface */
+  --color-subtle: #5d697c;       /* labels, >= 4.5:1 op wit, surface en sunken */
 
   /* Accent */
   --color-accent: #3762ab;

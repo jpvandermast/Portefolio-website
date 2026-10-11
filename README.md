@@ -4,11 +4,43 @@ Portfolio voor de HU-minor "Future-proof met AI!". Vite + React 19 + TypeScript 
 
 ## Opzet
 
-- **Frontend** (`src/`): one-page homepage met secties Over mij, Leeruitkomsten (LU1-LU5), Onderzoek, Projecten en Sprint-overzicht. `/stories/:slug` opent dezelfde pagina met het story-paneel open (deep links werken).
-- **Data** komt uit Supabase en wordt bij elk bezoek opgehaald, niet tijdens de build. Er staat geen story-inhoud in de code.
-- **Chatbot**: een Vercel Function in `api/chat.ts` die Gemini aanroept en gesprekken opslaat in Supabase. De system prompt staat in `api/_lib/systemPrompt.ts`, de grenzen (berichtlengte, tokens, rate limit) in `api/_lib/config.ts`.
-- **Gedeeld** (`shared/`): "over mij"- en leeruitkomst-gegevens die zowel de frontend als de chatbot gebruiken.
+- **Frontend** (`src/`): losse pagina's met react-router, elk als eigen chunk (lazy loading). Data komt uit Supabase en wordt bij elk bezoek opgehaald, niet tijdens de build. Er staat geen story-inhoud in de code.
+- **Chatbot**: een Vercel Function in `api/chat.ts` die Gemini aanroept (streamend, met terugval naar een gewone aanroep) en gesprekken opslaat in Supabase. De system prompt staat in `api/_lib/systemPrompt.ts`, de grenzen (berichtlengte, tokens, rate limit) in `api/_lib/config.ts`.
+- **Gedeeld** (`shared/`): "over mij"-gegevens en de officiële leeruitkomsten (met minimumnorm), gebruikt door de frontend én de chatbot.
 - Alle tabellen, wie erin schrijft en wie mag lezen: zie [`docs/database.md`](docs/database.md).
+
+### Routes
+
+| Route | Pagina |
+|---|---|
+| `/` | Homepage: hero met AI-vraagbalk, live cijfers en bewijs-constellatie; bento-overzicht |
+| `/stories` | Alle stories (menulabel "Bewijs"); filters in de URL: `?q=`, `?sprint=`, `?type=US\|RS\|LS`, `?lu=1-5` |
+| `/stories/:slug` | Eén story. **Deze URL nooit wijzigen**: links staan in ingeleverde opdrachten |
+| `/leeruitkomsten`, `/leeruitkomsten/lu1` … `lu5` | Officiële LU-tekst, minimumnorm en gekoppelde stories |
+| `/sprints` (`?sprint=N`) | Tijdlijn; standaard de huidige sprint (op datum, uit `src/data/sprints.ts`) |
+| `/over-mij` | Persoonlijk verhaal en contact |
+| `/projecten` | Uit tabel `projecten`; alleen in het menu als er rijen zijn |
+| overig | 404 |
+
+`vercel.json` herschrijft alle routes naar `index.html`, behalve `/api/*` en bestanden met een extensie.
+
+### Structuur van `src/`
+
+```
+src/
+  pages/              één bestand per route (lazy geladen)
+  components/
+    ui/               designsysteem: Button, Chip, Card, SectionHeader, PageHeader, EmptyState, Skeleton, Reveal
+    layout/           Header, MobileMenu, Footer, CommandPalette (Cmd/Ctrl+K), RouteEffects
+    home/             Hero, AskBar, Constellation, HeroStats, Bento, ContactStrip
+    story/            StoryCard, StoryGrid, StoryMarkdown, Lightbox
+    chat/             ChatWidget (launcher), ChatPanel, AssistantMessage, followUps
+  lib/                datalaag (supabase, stories, projecten, chat), contexts, hooks, afgeleide cijfers
+  data/               sprints.ts (semesterplanning), navigation.ts
+  index.css           designtokens in Tailwind 4 @theme (kleuren, vaste kleur per LU, radius, schaduwen, type)
+```
+
+Sprintdata staat in `src/data/sprints.ts`; pas die aan als de semesterplanning wijzigt.
 
 ## Environment variables
 

@@ -99,7 +99,7 @@ function layout(stories: StoryOverviewItem[]): { mode: 'lu' | 'type'; hubs: Hub[
       code: type,
       label: STORY_TYPE_LABELS[type].replace(' Story', ''),
       to: `/stories?type=${type}`,
-      ariaLabel: `${STORY_TYPE_LABELS[type]}s, ${count} ${count === 1 ? 'story' : 'stories'}`,
+      ariaLabel: `${STORY_TYPE_LABELS[type].replace('Story', 'Stories')}: ${count} ${count === 1 ? 'story' : 'stories'}`,
     };
   });
   const points = types.flatMap((type, ti) => {

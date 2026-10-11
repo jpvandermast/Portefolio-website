@@ -41,7 +41,7 @@ export const Breadcrumbs: React.FC<{ crumbs: Crumb[] }> = ({ crumbs }) => (
         return (
           <li key={`${c.label}-${i}`} className="flex items-center gap-1 min-w-0">
             {c.to && !last ? (
-              <Link to={c.to} className="rounded px-1 -mx-1 py-0.5 hover:text-ink transition-colors">
+              <Link to={c.to} className="relative rounded px-1 -mx-1 py-0.5 hover:text-ink transition-colors after:absolute after:-inset-x-1 after:-inset-y-2.5">
                 {c.label}
               </Link>
             ) : (

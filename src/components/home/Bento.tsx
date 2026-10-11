@@ -38,7 +38,7 @@ const LuProgressTile: React.FC = () => {
           const style = LU_STYLES[lu.nummer];
           return (
             <li key={lu.id}>
-              <Link to={luPath(lu.nummer)} className="group grid grid-cols-[6.5rem_1fr_auto] sm:grid-cols-[8.5rem_1fr_auto] items-center gap-3 min-h-8 rounded-md">
+              <Link to={luPath(lu.nummer)} className="group grid grid-cols-[8.75rem_1fr_auto] items-center gap-3 min-h-8 rounded-md">
                 <span className="flex items-center gap-2 text-[0.85rem] min-w-0">
                   <span className={cn('w-2 h-2 rounded-full shrink-0', style.dot)} aria-hidden="true" />
                   <span className="font-mono font-medium text-ink">{lu.code}</span>

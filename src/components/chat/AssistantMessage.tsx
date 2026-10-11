@@ -21,7 +21,7 @@ const StoryLinkCard: React.FC<{ slug: string; onNavigate: () => void }> = ({ slu
     <Link
       to={`/stories/${story.slug}`}
       onClick={onNavigate}
-      className="group/card flex items-center gap-3 rounded-xl bg-card p-2 pr-3 ring-1 ring-line shadow-card transition-[box-shadow,transform] hover:shadow-lift hover:-translate-y-px"
+      className="group/card min-w-0 flex items-center gap-3 rounded-xl bg-card p-2 pr-3 ring-1 ring-line shadow-card transition-[box-shadow,transform] hover:shadow-lift hover:-translate-y-px"
     >
       <span className="w-12 h-9 shrink-0 overflow-hidden rounded-lg bg-sunken ring-1 ring-line grid place-items-center">
         {story.klein_pad ? (
@@ -77,6 +77,7 @@ interface AssistantMessageProps {
 export const AssistantMessage: React.FC<AssistantMessageProps> = ({ content, streaming, onNavigate }) => {
   const [copied, setCopied] = useState(false);
   const slugs = useMemo(() => storySlugs(content), [content]);
+  const mdComponents = useMemo(() => components(onNavigate), [onNavigate]);
   const copy = async () => {
     try {
       await navigator.clipboard.writeText(content);
@@ -91,11 +92,11 @@ export const AssistantMessage: React.FC<AssistantMessageProps> = ({ content, str
       <AiAvatar size="sm" className="mt-0.5" />
       <div className="min-w-0 flex-1">
         <div className="text-[0.925rem] leading-relaxed text-ink/90 break-words">
-          <ReactMarkdown components={components(onNavigate)}>{content}</ReactMarkdown>
+          <ReactMarkdown components={mdComponents}>{content}</ReactMarkdown>
           {streaming && <span className="inline-block w-[2px] h-[1.05em] -mb-[0.18em] ml-0.5 bg-accent animate-blink" aria-hidden="true" />}
         </div>
         {!streaming && slugs.length > 0 && (
-          <div className="mt-3 grid gap-2 sm:max-w-md" aria-label="Genoemde stories">
+          <div className="mt-3 grid grid-cols-1 gap-2 max-w-md" aria-label="Genoemde stories">
             {slugs.slice(0, 4).map((slug) => (
               <StoryLinkCard key={slug} slug={slug} onNavigate={onNavigate} />
             ))}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import ReactMarkdown, { Components } from 'react-markdown';
 import { Maximize2 } from 'lucide-react';
 
@@ -15,7 +15,8 @@ const heading = ({ children }: { children?: React.ReactNode }) => (
 
 /** Rendert markdown uit de database zonder ruwe HTML (geen rehype-raw); links worden niet herschreven. */
 export const StoryMarkdown: React.FC<StoryMarkdownProps> = ({ markdown, imageUrls, onOpenImage }) => {
-  const components: Components = {
+  // Gememoïseerd: nieuwe componenttypes per render zouden de knoppen vervangen (en de focus kwijtraken)
+  const components: Components = useMemo(() => ({
     p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
     ul: ({ children }) => <ul className="mb-4 pl-5 list-disc space-y-1.5 marker:text-subtle">{children}</ul>,
     ol: ({ children }) => <ol className="mb-4 pl-5 list-decimal space-y-1.5 marker:text-subtle">{children}</ol>,
@@ -61,7 +62,7 @@ export const StoryMarkdown: React.FC<StoryMarkdownProps> = ({ markdown, imageUrl
         </button>
       );
     },
-  };
+  }), [imageUrls, onOpenImage]);
 
   return <ReactMarkdown components={components}>{markdown}</ReactMarkdown>;
 };
