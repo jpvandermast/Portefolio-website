@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Command } from 'cmdk';
-import { ArrowRight, CalendarRange, FileText, Home, Search, Sparkles, User } from 'lucide-react';
+import { ArrowRight, Bot, CalendarRange, FileText, FlaskConical, Home, Search, Sparkles, User } from 'lucide-react';
 import { learningOutcomes } from '../../../shared/portfolioContent';
-import { NAV_ITEMS, PROJECTEN_ITEM } from '../../data/navigation';
+import { NAV_ITEMS } from '../../data/navigation';
 import { normalize } from '../../lib/derive';
 import { LU_STYLES, luPath } from '../../lib/lu';
 import { STORY_TYPE_LABELS } from '../../lib/stories';
 import { useChat } from '../../lib/ChatContext';
 import { useProjecten } from '../../lib/ProjectenContext';
+import type { Project } from '../../types';
 import { useSearch } from '../../lib/SearchContext';
 import { useStories } from '../../lib/StoriesContext';
 import { cn } from '../ui/cn';
@@ -19,7 +20,8 @@ const PAGE_ICONS: Record<string, React.FC<{ className?: string }>> = {
   '/leeruitkomsten': Sparkles,
   '/sprints': CalendarRange,
   '/over-mij': User,
-  '/projecten': FileText,
+  '/onderzoek': FlaskConical,
+  '/ai-oplossingen': Bot,
 };
 
 /** Alle zoekwoorden moeten voorkomen (zonder accenten); titels wegen zwaarder dan de korte versie. */
@@ -44,7 +46,8 @@ export default function CommandPalette() {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
 
-  const pages = [{ label: 'Home', to: '/', description: 'Startpagina' }, ...NAV_ITEMS, ...(projecten.length ? [PROJECTEN_ITEM] : [])];
+  const pages = [{ label: 'Home', to: '/', description: 'Startpagina' }, ...NAV_ITEMS];
+  const projectPath = (p: Project) => (p.type === 'onderzoek' ? '/onderzoek' : '/ai-oplossingen');
 
   const go = (to: string) => {
     setOpen(false);
@@ -126,6 +129,25 @@ export default function CommandPalette() {
             </Command.Item>
           ))}
         </Command.Group>
+
+        {projecten.length > 0 && (
+          <Command.Group heading="Onderzoek en AI-oplossingen" className="cmdk-group">
+            {projecten.map((p) => (
+              <Command.Item
+                key={p.id}
+                value={`${p.titel} ${p.id}`}
+                keywords={[p.beschrijving ?? '', ...(p.tools ?? []), p.type]}
+                onSelect={() => go(projectPath(p))}
+                className={itemClass}
+              >
+                <span className="grid place-items-center w-8 h-8 rounded-lg bg-sunken text-muted shrink-0">
+                  {p.type === 'onderzoek' ? <FlaskConical className="w-4 h-4" aria-hidden="true" /> : <Bot className="w-4 h-4" aria-hidden="true" />}
+                </span>
+                <span className="min-w-0 truncate font-medium">{p.titel}</span>
+              </Command.Item>
+            ))}
+          </Command.Group>
+        )}
 
         <Command.Group heading="Leeruitkomsten" className="cmdk-group">
           {learningOutcomes.map((lu) => (

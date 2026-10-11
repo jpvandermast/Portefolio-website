@@ -20,7 +20,7 @@ Doe elke test **twee keer**: lokaal (`npm run dev:api`) en op de Vercel preview-
 | 12 | **Lightbox**: klik een afbeelding; pijltjes bladeren; Esc sluit alleen de lightbox; focus terug op de afbeelding | ☐ | ☐ | ☐ | ☐ |
 | 13 | **/leeruitkomsten**: officiële teksten, aantal stories naast "min. N× voldoende"; `/leeruitkomsten/lu3` toont een compacte lege staat | ☐ | ☐ | ☐ | ☐ |
 | 14 | **/sprints**: huidige sprint geselecteerd en "Nu bezig"; `/sprints?sprint=1` toont de 5 stories; Show & Grow-datum zichtbaar | ☐ | ☐ | ☐ | ☐ |
-| 15 | **/over-mij** en **/projecten** (lege staat zolang de tabel leeg is; Projecten staat dan niet in het menu) | ☐ | ☐ | ☐ | ☐ |
+| 15 | **/over-mij**; **/onderzoek** en **/ai-oplossingen** staan in het menu en tonen "Volgt binnenkort" zolang de tabel leeg is (of je eigen rij); `/projecten` stuurt door naar `/ai-oplossingen` | ☐ | ☐ | ☐ | ☐ |
 | 16 | **404**: `/bestaat-niet` toont de 404-pagina met zoekknop | ☐ | ☐ | ☐ | ☐ |
 | 17 | Geen horizontale scroll; ook op 768 en 1024 px niets dat overlapt | – | ☐ | – | ☐ |
 

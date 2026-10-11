@@ -19,7 +19,8 @@ Portfolio voor de HU-minor "Future-proof met AI!". Vite + React 19 + TypeScript 
 | `/leeruitkomsten`, `/leeruitkomsten/lu1` … `lu5` | Officiële LU-tekst, minimumnorm en gekoppelde stories |
 | `/sprints` (`?sprint=N`) | Tijdlijn; standaard de huidige sprint (op datum, uit `src/data/sprints.ts`) |
 | `/over-mij` | Persoonlijk verhaal en contact |
-| `/projecten` | Uit tabel `projecten`; alleen in het menu als er rijen zijn |
+| `/onderzoek` | Onderzoek (tabel `projecten`, type `onderzoek`); "volgt binnenkort" zolang leeg |
+| `/ai-oplossingen` | AI-oplossingen (tabel `projecten`, type `project`); `/projecten` stuurt hierheen door |
 | overig | 404 |
 
 `vercel.json` herschrijft alle routes naar `index.html`, behalve `/api/*` en bestanden met een extensie.
@@ -32,7 +33,8 @@ src/
   components/
     ui/               designsysteem: Button, Chip, Card, SectionHeader, PageHeader, EmptyState, Skeleton, Reveal
     layout/           Header, MobileMenu, Footer, CommandPalette (Cmd/Ctrl+K), RouteEffects
-    home/             Hero, AskBar, Constellation, HeroStats, Bento, ContactStrip
+    home/             Hero, AskBar, Constellation, HeroStats, Bento, WorkTeaser, ContactStrip
+    projecten/        ProjectTypePage, ProjectCard, ComingSoon (onderzoek en AI-oplossingen)
     story/            StoryCard, StoryGrid, StoryMarkdown, Lightbox
     chat/             ChatWidget (launcher), ChatPanel, AssistantMessage, followUps
   lib/                datalaag (supabase, stories, projecten, chat), contexts, hooks, afgeleide cijfers
@@ -61,9 +63,9 @@ Geheimen krijgen nooit een `VITE_`-prefix, want dan komen ze in de browserbundel
 
 Stories komen **niet** uit deze repo. De upload-pipeline zet ze in Supabase (tabellen `stories`, `story_files`, `story_leeruitkomsten` en de bucket `stories`). Zodra een story `zichtbaar = true` heeft, staat hij op de site, zonder code-aanpassing en zonder nieuwe deploy. De koppeling met leeruitkomsten (LU1-LU5) in `story_leeruitkomsten` bepaalt het bewijs per leeruitkomst.
 
-## Projecten en onderzoeken toevoegen
+## Onderzoek en AI-oplossingen toevoegen
 
-Supabase → Table Editor → tabel `projecten` → Insert row. Vul minimaal `titel` en `type` (`project` of `onderzoek`) in. `link_url` en `link_label` geven een knop naar een externe link, `tools` is een lijst en een lage `volgorde` komt eerst. Zet `zichtbaar` uit om een rij te verbergen. Ook dit is direct zichtbaar zonder deploy.
+Supabase → Table Editor → tabel `projecten` → Insert row. Vul minimaal `titel` en `type` (`onderzoek` → `/onderzoek`, `project` → `/ai-oplossingen`) in; `beschrijving` mag markdown zijn. Zie [`docs/database.md`](docs/database.md). `link_url` en `link_label` geven een knop naar een externe link, `tools` is een lijst en een lage `volgorde` komt eerst. Zet `zichtbaar` uit om een rij te verbergen. Ook dit is direct zichtbaar zonder deploy.
 
 ## Lokaal draaien
 

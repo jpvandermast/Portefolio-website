@@ -1,8 +1,6 @@
-import { NAV_ITEMS, PROJECTEN_ITEM } from '../../data/navigation';
-import { useProjecten } from '../../lib/ProjectenContext';
+import { NAV_ITEMS } from '../../data/navigation';
 
-/** Menu-items; Projecten alleen als er zichtbare rijen zijn. */
+/** Menu-items (Onderzoek en AI-oplossingen staan er altijd in, ook als ze nog leeg zijn). */
 export function useNavItems() {
-  const { projecten } = useProjecten();
-  return projecten.length > 0 ? [...NAV_ITEMS.slice(0, 3), PROJECTEN_ITEM, NAV_ITEMS[3]] : NAV_ITEMS;
+  return NAV_ITEMS;
 }

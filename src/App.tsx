@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { Route, Routes } from 'react-router';
+import { Navigate, Route, Routes } from 'react-router';
 import { Layout } from './components/layout/Layout';
 
 // Elke pagina is een eigen chunk (code-splitting)
@@ -10,7 +10,8 @@ const LearningOutcomesPage = lazy(() => import('./pages/LearningOutcomesPage'));
 const LearningOutcomePage = lazy(() => import('./pages/LearningOutcomePage'));
 const SprintsPage = lazy(() => import('./pages/SprintsPage'));
 const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+const ResearchPage = lazy(() => import('./pages/ResearchPage'));
+const SolutionsPage = lazy(() => import('./pages/SolutionsPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export default function App() {
@@ -25,7 +26,10 @@ export default function App() {
         <Route path="leeruitkomsten/:lu" element={<LearningOutcomePage />} />
         <Route path="sprints" element={<SprintsPage />} />
         <Route path="over-mij" element={<AboutPage />} />
-        <Route path="projecten" element={<ProjectsPage />} />
+        <Route path="onderzoek" element={<ResearchPage />} />
+        <Route path="ai-oplossingen" element={<SolutionsPage />} />
+        {/* Oude route: blijft werken */}
+        <Route path="projecten" element={<Navigate to="/ai-oplossingen" replace />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
