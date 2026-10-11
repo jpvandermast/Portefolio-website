@@ -21,6 +21,7 @@ Doe elke test **twee keer**: lokaal (`npm run dev:api`) en op de Vercel preview-
 | 13 | **/leeruitkomsten**: officiële teksten, aantal stories naast "min. N× voldoende"; `/leeruitkomsten/lu3` toont een compacte lege staat | ☐ | ☐ | ☐ | ☐ |
 | 14 | **/sprints**: huidige sprint geselecteerd en "Nu bezig"; `/sprints?sprint=1` toont de 5 stories; Show & Grow-datum zichtbaar | ☐ | ☐ | ☐ | ☐ |
 | 15 | **/over-mij**; **/onderzoek** en **/ai-oplossingen** staan in het menu en tonen "Volgt binnenkort" zolang de tabel leeg is (of je eigen rij); `/projecten` stuurt door naar `/ai-oplossingen` | ☐ | ☐ | ☐ | ☐ |
+| 15b | **/onderzoek**: kaart "De impact van AI op het beroep webontwikkelaar" met tekst, tools, twee pdf-downloads, knop "Bekijk de research story" en de visualisatie onderaan (scherp, klik/tik opent de lightbox, Esc sluit) | ☐ | ☐ | ☐ | ☐ |
 | 16 | **404**: `/bestaat-niet` toont de 404-pagina met zoekknop | ☐ | ☐ | ☐ | ☐ |
 | 17 | Geen horizontale scroll; ook op 768 en 1024 px niets dat overlapt | – | ☐ | – | ☐ |
 

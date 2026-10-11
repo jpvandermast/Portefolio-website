@@ -65,7 +65,7 @@ Stories komen **niet** uit deze repo. De upload-pipeline zet ze in Supabase (tab
 
 ## Onderzoek en AI-oplossingen toevoegen
 
-Supabase → Table Editor → tabel `projecten` → Insert row. Vul minimaal `titel` en `type` (`onderzoek` → `/onderzoek`, `project` → `/ai-oplossingen`) in; `beschrijving` mag markdown zijn. Zie [`docs/database.md`](docs/database.md). `link_url` en `link_label` geven een knop naar een externe link, `tools` is een lijst en een lage `volgorde` komt eerst. Zet `zichtbaar` uit om een rij te verbergen. Ook dit is direct zichtbaar zonder deploy.
+Supabase → Table Editor → tabel `projecten` → Insert row. Vul minimaal `titel` en `type` (`onderzoek` → `/onderzoek`, `project` → `/ai-oplossingen`) in; `beschrijving` mag markdown zijn. Zie [`docs/database.md`](docs/database.md). `link_url` en `link_label` geven een knop naar een externe link, `tools` is een lijst en een lage `volgorde` komt eerst. Zet `zichtbaar` uit om een rij te verbergen. Bij een onderzoek koppelt `story_slug` de Research Story (downloads en knop naar de story) en tonen `afbeelding_pad` + `afbeelding_alt` een visualisatie uit bucket `onderzoeken` onder de kaart. Ook dit is direct zichtbaar zonder deploy.
 
 ## Lokaal draaien
 

@@ -101,4 +101,9 @@ export interface Project {
   tools: string[];
   sprint: number | null;
   volgorde: number;
+  /** Slug van de bijbehorende story (stories.slug): levert downloads en de link naar /stories/<slug> */
+  story_slug: string | null;
+  /** Pad in bucket `onderzoeken`, bijv. `<slug>/visualisatie.png` */
+  afbeelding_pad: string | null;
+  afbeelding_alt: string | null;
 }

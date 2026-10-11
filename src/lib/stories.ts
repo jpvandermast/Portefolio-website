@@ -77,3 +77,15 @@ export async function getStory(slug: string): Promise<Story | null> {
     lus: (lus.data ?? []).map((r) => r.lu).sort((a, b) => a - b),
   };
 }
+
+/** Bijlagen (rol `document`) van een story, op volgorde. */
+export async function getStoryDocuments(storyId: string): Promise<StoryFile[]> {
+  const { data, error } = await client()
+    .from('story_files')
+    .select('*')
+    .eq('story_id', storyId)
+    .eq('rol', 'document')
+    .order('volgorde', { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as StoryFile[];
+}
