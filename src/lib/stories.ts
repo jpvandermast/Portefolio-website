@@ -1,5 +1,5 @@
 import { supabase } from './supabase';
-import type { Story, StoryFile, StoryOverviewItem } from '../types';
+import type { SprintLuBeoordeling, Story, StoryFile, StoryOverviewItem } from '../types';
 
 export const STORY_TYPE_LABELS = {
   US: 'User Story',
@@ -36,18 +36,21 @@ export async function getStoryOverview(): Promise<StoryOverviewItem[]> {
       .select('id, slug, titel, type, sprint, logboek_rij, korte_versie, klein_pad, klein_alt')
       .order('sprint', { ascending: true })
       .order('logboek_rij', { ascending: true }),
-    db.from('story_leeruitkomsten').select('story_id, lu'),
+    db.from('story_leeruitkomsten').select('story_id, lu, onderbouwing'),
   ]);
   if (overview.error) throw overview.error;
   if (lus.error) throw lus.error;
 
   const byStory = new Map<string, number[]>();
+  const notesByStory = new Map<string, Record<number, string>>();
   for (const row of lus.data ?? []) {
     byStory.set(row.story_id, [...(byStory.get(row.story_id) ?? []), row.lu]);
+    notesByStory.set(row.story_id, { ...(notesByStory.get(row.story_id) ?? {}), [row.lu]: row.onderbouwing ?? '' });
   }
   return (overview.data ?? []).map((s) => ({
-    ...(s as Omit<StoryOverviewItem, 'lus'>),
+    ...(s as Omit<StoryOverviewItem, 'lus' | 'luNotities'>),
     lus: (byStory.get(s.id) ?? []).sort((a, b) => a - b),
+    luNotities: notesByStory.get(s.id) ?? {},
   }));
 }
 
@@ -66,16 +69,27 @@ export async function getStory(slug: string): Promise<Story | null> {
 
   const [files, lus] = await Promise.all([
     db.from('story_files').select('*').eq('story_id', story.id).order('volgorde', { ascending: true }),
-    db.from('story_leeruitkomsten').select('lu').eq('story_id', story.id),
+    db.from('story_leeruitkomsten').select('lu, onderbouwing').eq('story_id', story.id),
   ]);
   if (files.error) throw files.error;
   if (lus.error) throw lus.error;
 
   return {
-    ...(story as Omit<Story, 'files' | 'lus'>),
+    ...(story as Omit<Story, 'files' | 'lus' | 'luNotities'>),
     files: (files.data ?? []) as StoryFile[],
     lus: (lus.data ?? []).map((r) => r.lu).sort((a, b) => a - b),
+    luNotities: Object.fromEntries((lus.data ?? []).map((r) => [r.lu, r.onderbouwing ?? ''])),
   };
+}
+
+/** Zelfbeoordeling (voldoende/onvoldoende) per sprint en leeruitkomst. */
+export async function getSprintLuBeoordelingen(): Promise<SprintLuBeoordeling[]> {
+  const { data, error } = await client()
+    .from('sprint_leeruitkomsten')
+    .select('sprint, lu, niveau')
+    .order('sprint', { ascending: true });
+  if (error) throw error;
+  return (data ?? []) as SprintLuBeoordeling[];
 }
 
 /** Bijlagen (rol `document`) van een story, op volgorde. */
