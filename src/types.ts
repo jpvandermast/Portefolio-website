@@ -59,6 +59,8 @@ export interface StoryOverviewItem {
   klein_alt: string | null;
   /** LU-nummers 1-5, uit story_leeruitkomsten */
   lus: number[];
+  /** Korte onderbouwing per LU (story_leeruitkomsten.onderbouwing); sleutel = LU-nummer */
+  luNotities: Record<number, string>;
 }
 
 export interface StoryFile {
@@ -87,6 +89,14 @@ export interface Story {
   geleerd_md: string;
   files: StoryFile[];
   lus: number[];
+  luNotities: Record<number, string>;
+}
+
+/** Zelfbeoordeling per sprint en leeruitkomst (tabel sprint_leeruitkomsten) */
+export interface SprintLuBeoordeling {
+  sprint: number;
+  lu: number;
+  niveau: 'voldoende' | 'onvoldoende';
 }
 
 // ---- Projecten uit Supabase (tabel projecten, door Josse gevuld via de Table Editor) ----
@@ -101,4 +111,9 @@ export interface Project {
   tools: string[];
   sprint: number | null;
   volgorde: number;
+  /** Slug van de bijbehorende story (stories.slug): levert downloads en de link naar /stories/<slug> */
+  story_slug: string | null;
+  /** Pad in bucket `onderzoeken`, bijv. `<slug>/visualisatie.png` */
+  afbeelding_pad: string | null;
+  afbeelding_alt: string | null;
 }

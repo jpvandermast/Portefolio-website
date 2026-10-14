@@ -17,7 +17,7 @@ export default function HomePage() {
         <SectionHeader eyebrow="Overzicht" title="Waar ik nu sta" description="Live uit mijn portfolio-database: voortgang, de lopende sprint en het nieuwste bewijs." />
         <Bento />
         <div className="mt-16 sm:mt-24">
-          <SectionHeader eyebrow="Onderzoek en bouwen" title="Wat ik onderzoek en bouw" description="Mijn onderzoek naar AI in het vak van de webdesigner en de AI-oplossingen die ik tijdens de minor maak." />
+          <SectionHeader eyebrow="Onderzoek en bouwen" title="Wat ik onderzoek en bouw" description="Mijn onderzoek naar AI in het vak van de webontwikkelaar en de AI-oplossingen die ik tijdens de minor maak." />
           <WorkTeaser />
         </div>
         <Reveal className="mt-16 sm:mt-24">

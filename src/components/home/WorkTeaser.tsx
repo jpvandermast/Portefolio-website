@@ -19,7 +19,7 @@ const BLOCKS: {
     type: 'onderzoek',
     to: '/onderzoek',
     eyebrow: 'Onderzoek',
-    title: 'De toekomst van AI in het vakgebied van de webdesigner',
+    title: 'De toekomst van AI in het vakgebied van de webontwikkelaar',
     empty: 'Het onderzoek is afgerond en verschijnt hier binnenkort.',
     icon: FlaskConical,
   },

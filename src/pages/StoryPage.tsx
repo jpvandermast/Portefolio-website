@@ -315,6 +315,9 @@ export default function StoryPage() {
                                 <span className="font-mono font-medium">{o.code}</span>
                                 <span className="text-muted group-hover:text-ink transition-colors">{o.title}</span>
                               </Link>
+                              {story.luNotities?.[lu] && (
+                                <p className="mt-1 pl-[1.15rem] text-[0.8rem] leading-snug text-subtle">{story.luNotities[lu]}</p>
+                              )}
                             </li>
                           )
                         );

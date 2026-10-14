@@ -26,7 +26,7 @@ export async function getPortfolioContext(): Promise<string> {
     db.from('story_leeruitkomsten').select('story_id, lu'),
     db
       .from('projecten')
-      .select('titel, beschrijving, type, link_url, tools, sprint')
+      .select('titel, beschrijving, type, link_url, tools, sprint, story_slug')
       .eq('zichtbaar', true)
       .order('volgorde', { ascending: true }),
   ]);
@@ -77,7 +77,8 @@ export async function getPortfolioContext(): Promise<string> {
   for (const p of projecten.data ?? []) {
     parts.push(
       `- ${p.type === 'onderzoek' ? 'Onderzoek' : 'Project'}: ${p.titel}${p.sprint != null ? ` (sprint ${p.sprint})` : ''}. ${p.beschrijving}` +
-        `${p.tools?.length ? ` Tools: ${p.tools.join(', ')}.` : ''}${p.link_url ? ` Link: ${p.link_url}` : ''}`,
+        `${p.tools?.length ? ` Tools: ${p.tools.join(', ')}.` : ''}${p.story_slug ? ` Story: /stories/${p.story_slug}.` : ''}` +
+        `${p.type === 'onderzoek' ? ' Pagina: /onderzoek.' : ' Pagina: /ai-oplossingen.'}${p.link_url ? ` Link: ${p.link_url}` : ''}`,
     );
   }
 

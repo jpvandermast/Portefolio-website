@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router';
 import { ArrowLeft, ArrowRight, Link2Off } from 'lucide-react';
 import { learningOutcomes } from '../../shared/portfolioContent';
+import { LuBewijsKaart } from '../components/story/LuBewijsKaart';
 import { StoryGrid } from '../components/story/StoryGrid';
 import { Button } from '../components/ui/Button';
 import { Container } from '../components/ui/Container';
@@ -12,6 +13,7 @@ import { getSprint } from '../data/sprints';
 import { groupBySprint } from '../lib/derive';
 import { getLearningOutcome, LU_STYLES, luPath, parseLuParam } from '../lib/lu';
 import { useStories } from '../lib/StoriesContext';
+import { useSprintLu } from '../lib/useSprintLu';
 import { useDocumentTitle } from '../lib/useDocumentTitle';
 import NotFoundPage from './NotFoundPage';
 
@@ -20,6 +22,7 @@ export default function LearningOutcomePage() {
   const nummer = parseLuParam(param);
   const outcome = nummer ? getLearningOutcome(nummer) : undefined;
   const { stories, status } = useStories();
+  const { items: beoordelingen } = useSprintLu();
   useDocumentTitle(outcome ? `${outcome.code} · ${outcome.title}` : null, outcome?.shortDescription);
 
   if (!outcome || !nummer) return <NotFoundPage />;
@@ -27,6 +30,8 @@ export default function LearningOutcomePage() {
   const style = LU_STYLES[nummer];
   const linked = stories.filter((s) => s.lus.includes(nummer));
   const groups = groupBySprint(linked);
+  const niveauIn = (sprint: number) => beoordelingen.find((b) => b.sprint === sprint && b.lu === nummer)?.niveau;
+  const voldoendeSprints = beoordelingen.filter((b) => b.lu === nummer && b.niveau === 'voldoende').length;
   const prev = learningOutcomes.find((l) => l.nummer === nummer - 1);
   const next = learningOutcomes.find((l) => l.nummer === nummer + 1);
 
@@ -61,6 +66,13 @@ export default function LearningOutcomePage() {
         ))}
       </dl>
 
+      {voldoendeSprints > 0 && (
+        <p className="mb-6 max-w-3xl text-[0.95rem] text-muted">
+          Zelf voldoende beoordeeld in <strong className="font-semibold text-ink">{voldoendeSprints}</strong>{' '}
+          {voldoendeSprints === 1 ? 'sprint' : 'sprints'} (minimaal {outcome.minimumVoldoende} nodig). Elke kaart hieronder legt kort uit
+          waarom die story bewijs is; klik voor de volledige story.
+        </p>
+      )}
       <h2 className="mb-6 text-h2">Bewijs</h2>
       {status === 'ready' && linked.length === 0 ? (
         <EmptyState
@@ -86,8 +98,21 @@ export default function LearningOutcomePage() {
                 <span className="font-mono text-[0.75rem] font-normal text-subtle">
                   {items.length} {items.length === 1 ? 'story' : 'stories'}
                 </span>
+                {niveauIn(n) && (
+                  <span className="font-mono text-[0.75rem] font-normal text-subtle">
+                    · zelfbeoordeling: {niveauIn(n)}
+                  </span>
+                )}
               </h3>
-              <StoryGrid stories={items} empty={null} headingLevel="h3" />
+              <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {items.map((s) => (
+                  <li key={s.slug} className="flex">
+                    <div className="flex-1">
+                      <LuBewijsKaart story={s} lu={nummer} />
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </section>
           ))}
         </div>

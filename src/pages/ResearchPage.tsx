@@ -7,10 +7,10 @@ export default function ResearchPage() {
     <ProjectTypePage
       type="onderzoek"
       title="Onderzoek"
-      lead="Mijn onderzoek naar de toekomst van AI in het vakgebied van de webdesigner: wat verandert er, en welke vaardigheden heb ik daarvoor nodig?"
-      metaDescription="Het onderzoek van Josse van der Mast naar de toekomst van AI in het vakgebied van de webdesigner."
+      lead="Mijn onderzoek naar de toekomst van AI in het vakgebied van de webontwikkelaar: wat verandert er, en welke vaardigheden heb ik daarvoor nodig?"
+      metaDescription="Het onderzoek van Josse van der Mast naar de toekomst van AI in het vakgebied van de webontwikkelaar."
       icon={FlaskConical}
-      comingSoonTitle="De toekomst van AI in het vakgebied van de webdesigner"
+      comingSoonTitle="De toekomst van AI in het vakgebied van de webontwikkelaar"
       comingSoonText="Dit onderzoek is afgerond en wordt hier binnenkort gepubliceerd, met een samenvatting en het volledige verslag."
       relatedType="RS"
       relatedText="Ander onderzoek dat ik tijdens de sprints heb gedaan."
